@@ -22,14 +22,19 @@ class WPHackerspace
         // load translations
         load_plugin_textdomain('wp-hackerspace', false, plugin_dir_path(__FILE__).'/languages');
 
-        //
+        // configure the plugin settings
         add_action('admin_init', array($this, 'admin_init'));
 
         // enable the admin setting menu
         add_action('admin_menu', array($this, 'admin_menu'));
 
+        // enable the Space Api json feed
+        add_action('init', array($this, 'spaceapi_feed'));
+
         // enable a settings link in the WordPress plugins menu
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
+
+
 
     }
 
@@ -40,6 +45,11 @@ class WPHackerspace
 
     // deactivate the plugin
     public static function deactivate()
+    {
+    }
+
+    // uninstall the plugin
+    public static function uninstall()
     {
     }
 
@@ -76,12 +86,22 @@ class WPHackerspace
         return $links;
     }
 
+    // render the Space Api json feed
+    public function spaceapi_feed()
+    {
+        //TODO move the spaceapi_json method to a more general SpaceApi class ?
+        include_once(plugin_dir_path(__FILE__).'templates/spaceapi_feed.php');
+        $SpaceApiJson = new SpaceApiJson();
+        add_feed('spaceapi', array($SpaceApiJson, 'spaceapi_json'));
+    }
+
 }
 
 
-// register activation and deactivation hooks
+// register activation, deactivation and uninstall hooks
 register_activation_hook(__FILE__, array('WPHackerspace', 'activate'));
 register_deactivation_hook(__FILE__, array('WPHackerspace', 'deactivate'));
+register_uninstall_hook(__FILE__, array('WPHackerspace', 'uninstall'));
 
 // instantiate the plugin class
 $wpHackerspace = new WPHackerspace();
