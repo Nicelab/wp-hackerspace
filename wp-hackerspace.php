@@ -5,7 +5,7 @@
  * Author: Nicelab.org
  * Author URI: http://nicelab.org/
  * Description: Add custom post types useful for hackerspaces and expose informations trough the Space API.
- * Version: 0.1
+ * Version: 0.2
  * Copyright: (c) 2014 Nicelab.org
  * License: Expat/MIT License
  * Text Domain: wp-hackerspace
@@ -13,6 +13,7 @@
  */
 
 
+// main class for the plugin
 class WPHackerspace
 {
     // class contructor
@@ -26,6 +27,10 @@ class WPHackerspace
 
         // enable the admin setting menu
         add_action('admin_menu', array($this, 'admin_menu'));
+
+        // enable a settings link in the WordPress plugins menu
+        add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
+
     }
 
     // activate the plugin
@@ -62,6 +67,13 @@ class WPHackerspace
             wp_die(__('You do not have sufficient permissions to access this page.', 'wp-hackerspace'));
         }
         include(sprintf(plugin_dir_path(__FILE__).'templates/settings.php'));
+    }
+
+    // render the settings link in the in the WordPress plugins menu
+    public function plugin_action_links($links)
+    {
+        $links[] = '<a href="'.get_admin_url(null, 'options-general.php?page=hackerspace_options').'">'.__('Settings', 'wp-hackerspace').'</a>';
+        return $links;
     }
 
 }
