@@ -3,3 +3,6 @@ TODO
 
 * Try to create a Page instead of a feed for Space Api json output
   -> This would allow the recomended /status.json address
+
+* Follow PSR-0 coding practice
+  -> Use namespace, autoloader, etc...
