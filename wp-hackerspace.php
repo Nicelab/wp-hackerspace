@@ -31,10 +31,11 @@ class WPHackerspace
         // enable the Space Api json feed
         add_action('init', array($this, 'spaceapi_feed'));
 
+        // enable the spaceapi rel element in the blog headers
+        add_action('wp_head', array($this, 'spaceapi_rel'));
+
         // enable a settings link in the WordPress plugins menu
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
-
-
 
     }
 
@@ -89,10 +90,15 @@ class WPHackerspace
     // render the Space Api json feed
     public function spaceapi_feed()
     {
-        //TODO move the spaceapi_json method to a more general SpaceApi class ?
-        include_once(plugin_dir_path(__FILE__).'templates/spaceapi_feed.php');
-        $SpaceApiJson = new SpaceApiJson();
-        add_feed('spaceapi', array($SpaceApiJson, 'spaceapi_json'));
+        include_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php');
+        $SpaceApi = new SpaceApi();
+        add_feed('spaceapi', array($SpaceApi, 'spaceapi_json'));
+    }
+
+    // add the spaceapi rel element to the blog headers
+    public function spaceapi_rel()
+    {
+        echo '<link rel="space-api" href="'.get_bloginfo('url').'?feed=spaceapi" />'."\n";
     }
 
 }
