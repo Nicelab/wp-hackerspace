@@ -57,12 +57,48 @@ class WPHackerspace
     // register the plugin settings
     public function admin_init()
     {
+        // TODO tests between serialisation between object, array and JSON
+        // TODO move most of this in the SpaceApi class (at last fields, and maybe sections registration)
+        include_once(plugin_dir_path(__FILE__).'includes/Settings.php'); //TODO use autoloader
+        $Settings = new Settings();
+        register_setting(
+            'wp-hackerspace',
+            'spaceapi_settings'
+//            array($Settings, 'spaceapi_settings_validate')
+        );
+        add_settings_section(
+            'spaceapi_section',
+            __('Space Api Settings', 'wp-hackerspace'),
+            array($Settings, 'spaceapi_settings_section'),
+            'hackerspace_options'
+        );
+        add_settings_field(
+            'spaceapi_space',
+            __('Space name', 'wp-hackerspace'),
+            array($Settings, 'spaceapi_space_field'),
+            'hackerspace_options',
+            'spaceapi_section'
+        );
+        add_settings_field(
+            'spaceapi_url',
+            __('Space url', 'wp-hackerspace'),
+            array($Settings, 'spaceapi_url_field'),
+            'hackerspace_options',
+            'spaceapi_section'
+        );
+        add_settings_field(
+            'spaceapi_logo',
+            __('Logo url', 'wp-hackerspace'),
+            array($Settings, 'spaceapi_logo_field'),
+            'hackerspace_options',
+            'spaceapi_section'
+        );
     }
 
     // configure the plugin settings menu
     public function admin_menu()
     {
-            add_options_page(
+        add_options_page(
             __('Hackerspace', 'wp-hackerspace'),
             __('Hackerspace', 'wp-hackerspace'),
             'manage_options',
@@ -71,6 +107,7 @@ class WPHackerspace
         );
     }
 
+    // TODO move this in Settings class ?
     // render the settings template
     public function plugin_settings_template()
     {
@@ -90,7 +127,7 @@ class WPHackerspace
     // render the Space Api json feed
     public function spaceapi_feed()
     {
-        include_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php');
+        include_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php'); //TODO use autoloader
         $SpaceApi = new SpaceApi();
         add_feed('spaceapi', array($SpaceApi, 'spaceapi_json'));
     }
