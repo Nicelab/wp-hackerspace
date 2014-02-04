@@ -10,12 +10,22 @@ class SpaceApi
 
     const API_VERSION = '0.13';
 
+    public function __construct()
+    {
+        $this->spaceapi = new stdClass; // TODO create an external regular class ?
+        $this->spaceapi->api = self::API_VERSION;
+    }
+
+    // save the space api settings
+    public function save_spaceapi_settings()
+    {
+        //$spaceapi = $this->spaceapi;
+    }
 
     // get space api infos from the settings
     public function get_spaceapi_settings()
     {
-        $spaceapi = new stdClass;
-        $spaceapi->api = self::API_VERSION;
+        $spaceapi = $this->spaceapi;
         $spaceapi->state->open = null;
         return $spaceapi;
     }
