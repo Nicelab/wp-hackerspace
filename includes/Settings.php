@@ -18,9 +18,9 @@ class Settings
 //    }
 
     // render the Space Api section description text
-    public function spaceapi_settings_section()
+    public function spaceapi_main_section()
     {
-        _e('Informations about your space avalaible with the Space Api.', 'wp-hackerspace');
+        _e('Main informations about your space.', 'wp-hackerspace');
     }
 
     public function spaceapi_location_section()
