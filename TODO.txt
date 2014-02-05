@@ -6,3 +6,5 @@ TODO
 
 * Follow PSR-0 coding practice
   -> Use namespace, autoloader, etc...
+
+* Use the WordPress Media feature for logo, open, close images
