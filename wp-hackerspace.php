@@ -34,6 +34,9 @@ class WPHackerspace
         // enable the spaceapi rel element in the blog headers
         add_action('wp_head', array($this, 'spaceapi_rel'));
 
+        // enable the contextual help
+        add_action('contextual_help', array($this, 'plugin_contextual_help'), 10, 3);
+
         // enable a settings link in the WordPress plugins menu
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
 
@@ -106,6 +109,25 @@ class WPHackerspace
             wp_die(__('You do not have sufficient permissions to access this page.', 'wp-hackerspace'));
         }
         include(sprintf(plugin_dir_path(__FILE__).'templates/settings.php'));
+    }
+
+    // render the contextual help drop-down menu
+    public function plugin_contextual_help($contextual_help, $screen_id, $screen)
+    {
+        if ($screen_id=='settings_page_hackerspace_options') {
+            $screen->add_help_tab(array(
+                'id'        => 'wp-hackerspace-overview',
+                'title'     => __('Overview', 'wp-hackerspace'),
+                'content'   => '<p>Overview help text</p>'
+            ));
+            $screen->add_help_tab(array(
+                'id'        => 'wp-hackerspace-spaceapi',
+                'title'     => __('Space Api', 'wp-hackerspace'),
+                'content'   => '<p>Space Api help text</p>'
+            ));
+            // help sidebar links
+            $screen->set_help_sidebar('<p>Sidebar help text</p>');
+        }
     }
 
     // render the settings link in the in the WordPress plugins menu
