@@ -1,27 +1,39 @@
 === hackerspace ===
-Contributors: miniwark
+Contributors: Nicelab
+Donate link:
 Tags: hackerspace, spaceapi, json, wiki
 Requires at least: 3.8
 Tested up to: 3.8 License
+Stable tag:
 License: Expat/MIT
 License URI: http://directory.fsf.org/wiki/License:Expat
 
 Add custom post types useful for hackerspaces and expose information trough the Space API.
 
+
 == Description ==
-The plugin add various custom post type useful for Hackerspaces : Wiki, Projects and Equipment.  This custom type are available to the new \"hacker\" user role. The plugin also implement the Space APi to display informations about the Hackerspace. The open/close information is derived from the Opening Hours plugin.
+The plugin add various custom post type useful for Hackerspaces : Wiki, Projects and Equipment.  This custom post type are available to the new \"hacker\" user role. The plugin also implement the Space APi to display informations about the Hackerspace. The open/close information is derived from the Opening Hours plugin.
 
 Main limitations: no membership support, no events support.
+
 
 == Installation ==
 1. Download the Zip archive
 2. Unzip the archive
 3. Upload the plugin folder to the /wp-content/plugins/ directory or by upload in the web interface
 4. In your Admin Panel go to Plugins and activate the hackerspace plugin
-5. Edit the plugin settings in he Setting/Hackersapce admin panel
+5. Edit the plugin settings in the Setting/Hackersapce admin panel
+
+
+== Frequently Asked Questions ==
+
+== Screenshots ==
 
 
 == Changelog ==
+
+= 0.2 =
+Add the Space Api setting page and Json feed
 
 = 0.1 =
 Bootstaping the plugin
