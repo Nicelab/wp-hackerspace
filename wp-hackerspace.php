@@ -42,38 +42,24 @@ class WPHackerspace
 
 
         // TODO move all this stuff in a better place (activate ?) (class constructors?)
-        if (false==get_option('hackerspace_plugin_features')) {
-            add_option('hackerspace_plugin_features');
-        }
+//        if (false==get_option('hackerspace_features')) {
+//            add_option('hackerspace_features');
+//        }
 
-        //create the option object
-        $default_options = new stdClass;
-        $default_options->space = null;
-        $default_options->logo = null;
-        $default_options->url = null;
-        $default_options->location->address = null;
-        $default_options->location->lat = null;
-        $default_options->location->lon = null;
-        $default_options->contact->email = null;
-        $default_options->contact->phone = null;
-        $default_options->contact->sip = null;
-        $default_options->contact->irc = null;
-        $default_options->contact->twitter = null;
-        $default_options->contact->facebook = null;
-        $default_options->contact->identica = null;
-        $default_options->contact->foursquare = null;
-        $default_options->contact->ml = null;
-        $default_options->contact->jabber = null;
 
         //if (false==get_option('hackerspace_plugin_spaceapi')) {
             //add_option('hackerspace_plugin_spaceapi', $spaceapiarray);
         //}
         //update_option('hackerspace_plugin_spaceapi', $spaceapiarray);
 
+        include_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php'); //TODO use autoloader
+        $SpaceApi = new SpaceApi();
+
         if (false==get_option('hackerspace_spaceapi')) {
-            add_option('hackerspace_spaceapi', $default_options);
+            add_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
         }
-        //update_option('hackerspace_spaceapi', $default_options);
+        //update_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
+        //delete_option('hackerspace_plugin_features');
     }
 
     // activate the plugin
@@ -102,10 +88,13 @@ class WPHackerspace
         //register_setting('hackerspace_features', 'hackerspace_features', array($Settings, 'hackerspace_features_validate'));
         register_setting('hackerspace_spaceapi', 'hackerspace_spaceapi', array($Settings, 'spaceapi_settings_validate'));
 
+        add_settings_section('about_section', null, null, 'hackerspace_spaceapi'); // display api version
         add_settings_section('main_section', __('Main informations', 'wp-hackerspace'), array($Settings, 'spaceapi_main_section'), 'hackerspace_spaceapi');
         add_settings_section('location_section', __('Location', 'wp-hackerspace'), array($Settings, 'spaceapi_location_section'), 'hackerspace_spaceapi');
         add_settings_section('contact_section', __('Contact', 'wp-hackerspace'), array($Settings, 'spaceapi_contact_section'), 'hackerspace_spaceapi');
+        add_settings_section('other_section', __('Other', 'wp-hackerspace'), array($Settings, 'spaceapi_other_section'), 'hackerspace_spaceapi');
 
+        add_settings_field('api', __('Space Api version', 'wp-hackerspace'), array($Settings, 'spaceapi_api_field'), 'hackerspace_spaceapi', 'about_section');
         add_settings_field('space', __('Space name', 'wp-hackerspace'), array($Settings, 'spaceapi_space_field'), 'hackerspace_spaceapi', 'main_section');
         add_settings_field('url', __('Space url', 'wp-hackerspace'), array($Settings, 'spaceapi_url_field'), 'hackerspace_spaceapi', 'main_section');
         add_settings_field('logo', __('Logo url', 'wp-hackerspace'), array($Settings, 'spaceapi_logo_field'), 'hackerspace_spaceapi', 'main_section');
@@ -122,6 +111,7 @@ class WPHackerspace
         add_settings_field('foursquare', __('Foursquare', 'wp-hackerspace'), array($Settings, 'spaceapi_foursquare_field'), 'hackerspace_spaceapi', 'contact_section');
         add_settings_field('ml', __('Mailling list', 'wp-hackerspace'), array($Settings, 'spaceapi_ml_field'), 'hackerspace_spaceapi', 'contact_section');
         add_settings_field('jabber', __('Jabber', 'wp-hackerspace'), array($Settings, 'spaceapi_jabber_field'), 'hackerspace_spaceapi', 'contact_section');
+        add_settings_field('issue_report_channel', __('Issue report channel', 'wp-hackerspace'), array($Settings, 'spaceapi_issue_report_channel_field'), 'hackerspace_spaceapi', 'other_section');
     }
 
     // configure the plugin settings menu

@@ -14,11 +14,14 @@ class Settings
     // validate the Space api settings
     public function spaceapi_settings_validate($input)
     {
-        // TODO add sanitization
+        // input options are in an arry, we prefer stdClass object
+        $output = json_decode(json_encode($input));
+        // sanitization
+        $output->location->lat = (float)$output->location->lat; // html form have saved this as text instead off numbers
+        $output->location->lon = (float)$output->location->lon;
         // TODO add validation
 
-        // options are saved as stdClass
-        $output = json_decode(json_encode($input));
+
         return $output;
     }
 
@@ -44,15 +47,33 @@ class Settings
         _e('Contact information about your space. You must define at least one.', 'wp-hackerspace');
     }
 
+    public function spaceapi_other_section()
+    {
+    }
 
     // render the Space Api form fields
     // TODO we must create a generic function for this, or search if there is a WordPress official one
+
+    public function spaceapi_api_field() // readonly field
+    {
+        $options = get_option('hackerspace_spaceapi');
+        echo "<input name='hackerspace_spaceapi[api]' value='{$options->api}' class='regular-text' type='text' readonly />";
+    }
+
+    // TODO issue report chanel is readonly and set up to 'email' for now, we need change this to combo boxes in future versions
+    public function spaceapi_issue_report_channel_field() //read only field
+    {
+        $options = get_option('hackerspace_spaceapi');
+        echo "<input name='hackerspace_spaceapi[issue_report_channels][0]' value='{$options->issue_report_channels[0]}' type='text' readonly />";
+    }
+
     public function spaceapi_space_field()
     {
         $options = get_option('hackerspace_spaceapi');
         $description = __('The name of your space.', 'wp-hackerspace');
         echo "<input name='hackerspace_spaceapi[space]' value='{$options->space}' class='regular-text' type='text' required='required' />";
-        echo "<p class='description'>{$description}</p>";
+        echo "<p class='description'>{$description}</p></br>";
+        print_r($options);
     }
 
     public function spaceapi_url_field()
@@ -96,15 +117,15 @@ class Settings
         echo "<p class='description'>{$description}</p>";
     }
 
+    // email is required for now, because of issue_report_channels_field set up to default to this value
     public function spaceapi_email_field()
     {
         $options = get_option('hackerspace_spaceapi');
         $description = __('E-mail address for contacting your space.', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[contact][email]' value='{$options->contact->email}' class='regular-text ltr' type='email' />";
+        echo "<input name='hackerspace_spaceapi[contact][email]' value='{$options->contact->email}' class='regular-text ltr' type='email' required='required' />";
         echo "<p class='description'>{$description}</p>";
     }
 
-    // TODO test html5 phone validation
     public function spaceapi_phone_field()
     {
         $options = get_option('hackerspace_spaceapi');
