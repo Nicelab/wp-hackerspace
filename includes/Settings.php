@@ -96,7 +96,7 @@ class Settings
     {
         $options = get_option('hackerspace_spaceapi');
         $description = __('The postal address of your space. Example: Netzladen e.V., Breite Straße 74, 53111 Bonn, Germany', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[location][address]' value='{$options->location->address}' class='regular-text' type='text' required='required' />";
+        echo "<input name='hackerspace_spaceapi[location][address]' value='{$options->location->address}' class='regular-text' type='text' />";
         echo "<p class='description'>{$description}</p>";
     }
 

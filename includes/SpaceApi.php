@@ -18,22 +18,22 @@ class SpaceApi
         $spaceapi = new stdClass;
         $spaceapi->api = self::API_VERSION;
         $spaceapi->space = get_option('blogname');
-        $spaceapi->logo = null;
+        $spaceapi->logo = "";
         $spaceapi->url = get_option('siteurl');
-        $spaceapi->location->address = null;
+        $spaceapi->location->address = "";
         $spaceapi->location->lat = null;
         $spaceapi->location->lon = null;
         $spaceapi->contact->email = get_option('admin_email');
-        $spaceapi->contact->phone = null;
-        $spaceapi->contact->sip = null;
-        $spaceapi->contact->irc = null;
-        $spaceapi->contact->twitter = null;
-        $spaceapi->contact->facebook = null;
-        $spaceapi->contact->identica = null;
-        $spaceapi->contact->foursquare = null;
-        $spaceapi->contact->ml = null;
-        $spaceapi->contact->jabber = null;
-        $spaceapi->issue_report_channels = array('email'); // hidden field
+        $spaceapi->contact->phone = "";
+        $spaceapi->contact->sip = "";
+        $spaceapi->contact->irc = "";
+        $spaceapi->contact->twitter = "";
+        $spaceapi->contact->facebook = "";
+        $spaceapi->contact->identica = "";
+        $spaceapi->contact->foursquare = "";
+        $spaceapi->contact->ml = "";
+        $spaceapi->contact->jabber = "";
+        $spaceapi->issue_report_channels = array('email');
 
         return $spaceapi;
     }
@@ -43,9 +43,18 @@ class SpaceApi
     {
         // get infos from settings
         $spaceapi = get_option('hackerspace_spaceapi');
-        // TODO remove the null values
-        // Add the api version
-        $spaceapi->api = self::API_VERSION;
+        // remove not required empty values
+        if ($spaceapi->location->address == "") unset($spaceapi->location->address);
+        if ($spaceapi->contact->phone == "") unset($spaceapi->contact->phone);
+        if ($spaceapi->contact->sip == "") unset($spaceapi->contact->sip);
+        if ($spaceapi->contact->irc == "") unset($spaceapi->contact->irc);
+        if ($spaceapi->contact->twitter == "") unset($spaceapi->contact->twitter);
+        if ($spaceapi->contact->facebook == "") unset($spaceapi->contact->facebook);
+        if ($spaceapi->contact->identica == "") unset($spaceapi->contact->irc);
+        if ($spaceapi->contact->foursquare == "") unset($spaceapi->contact->foursquare);
+        if ($spaceapi->contact->ml == "") unset($spaceapi->contact->ml);
+        if ($spaceapi->contact->jabber == "") unset($spaceapi->contact->jabber);
+
         // Add the open/close status
         $spaceapi->state->open = null;
         // TODO add projects
