@@ -15,7 +15,6 @@ if (isset($_GET['tab'])) {
 
 <div class="wrap">
     <h2><?php _e('Hackerspace settings', 'wp-hackerspace') ?></h2>
-    <?php settings_errors(); ?>
 
     <h2 class="nav-tab-wrapper">
         <a href="?page=hackerspace_options&tab=features" class="nav-tab <? if ($active_tab=='features') echo 'nav-tab-active'; ?>"><?php _e('Features', 'wp-hackerspace') ?></a>
@@ -25,11 +24,11 @@ if (isset($_GET['tab'])) {
     <form action="options.php" method="post">
     <?php
         if ($active_tab == 'features') {
-            //settings_fields('hackerspace_settings');
-            //do_settings_sections('hackerspace_settings');
+            //settings_fields('hackerspace_features');
+            //do_settings_sections('hackerspace_features');
         } elseif ($active_tab == 'spaceapi') {
-            settings_fields('spaceapi_settings');
-            do_settings_sections('spaceapi_settings');
+            settings_fields('hackerspace_spaceapi');
+            do_settings_sections('hackerspace_spaceapi');
         }
         submit_button();
     ?>
