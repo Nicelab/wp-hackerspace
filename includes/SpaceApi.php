@@ -10,7 +10,6 @@ class SpaceApi
 
     const API_VERSION = '0.13';
 
-    // TODO use other options from wordress to populate the defaults
     // TODO move this in Settings.php ?
     // create the default (empty) spaceapi object for use with plugin settings forms
     public function set_default_spaceapi()
