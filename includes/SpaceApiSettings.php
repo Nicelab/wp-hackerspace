@@ -9,6 +9,7 @@ class SpaceApiSettings
 
     public function __construct()
     {
+        $this->options = get_option('hackerspace_spaceapi'); // TODO check first if exist then create with default values
     }
 
     // whitelist the Space Api settings
@@ -84,149 +85,129 @@ class SpaceApiSettings
     }
 
     // render the Space Api form fields
-    // TODO we must create a generic function for this, or search if there is a WordPress official one
-
     public function api_field() // readonly field
     {
-        $options = get_option('hackerspace_spaceapi');
-        echo "<input name='hackerspace_spaceapi[api]' value='{$options->api}' class='regular-text' type='text' readonly />";
+        echo "<input name='hackerspace_spaceapi[api]' value='{$this->options->api}' class='regular-text' type='text' readonly />";
     }
 
     public function space_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('The name of your space.', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[space]' value='{$options->space}' class='regular-text' type='text' required='required' />";
+        echo "<input name='hackerspace_spaceapi[space]' value='{$this->options->space}' class='regular-text' type='text' required='required' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function url_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('URL to your space website.', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[url]' value='{$options->url}' class='regular-text code' type='url' required='required' />";
+        echo "<input name='hackerspace_spaceapi[url]' value='{$this->options->url}' class='regular-text code' type='url' required='required' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function logo_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('URL to your space logo.', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[logo]' value='{$options->logo}' class='regular-text code' type='url' required='required' />";
+        echo "<input name='hackerspace_spaceapi[logo]' value='{$this->options->logo}' class='regular-text code' type='url' required='required' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function address_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('The postal address of your space. Example: Netzladen e.V., Breite Straße 74, 53111 Bonn, Germany', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[location][address]' value='{$options->location->address}' class='regular-text' type='text' />";
+        echo "<input name='hackerspace_spaceapi[location][address]' value='{$this->options->location->address}' class='regular-text' type='text' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     // TODO test coma/point, add step and max min
     public function lat_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('Latitude of your space location, in degree with decimal places. Use positive values for locations north of the equator, negative values for locations south of equator.', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[location][lat]' value='{$options->location->lat}' class='small-text' type='number' required='required' />";
+        echo "<input name='hackerspace_spaceapi[location][lat]' value='{$this->options->location->lat}' class='small-text' type='number' required='required' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function lon_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('Longitude of your space location, in degree with decimal places. Use positive values for locations west of Greenwich, and negative values for locations east of Greenwich.', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[location][lon]' value='{$options->location->lon}' class='small-text' type='number' required='required' />";
+        echo "<input name='hackerspace_spaceapi[location][lon]' value='{$this->options->location->lon}' class='small-text' type='number' required='required' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     // email is required for now, because of issue_report_channels_field set up to default to this value
     public function email_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('E-mail address for contacting your space.', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[contact][email]' value='{$options->contact->email}' class='regular-text ltr' type='email' required='required' />";
+        echo "<input name='hackerspace_spaceapi[contact][email]' value='{$this->options->contact->email}' class='regular-text ltr' type='email' required='required' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function phone_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('Phone number, including country code with a leading plus sign. Example: +1 800 555 4567', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[contact][phone]' value='{$options->contact->phone}' class='regular-text' type='tel' />";
+        echo "<input name='hackerspace_spaceapi[contact][phone]' value='{$this->options->contact->phone}' class='regular-text' type='tel' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function sip_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('URI for Voice-over-IP via SIP. Example: sip:yourspace@sip.example.org', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[contact][sip]' value='{$options->contact->sip}' class='regular-text code' type='url' />";
+        echo "<input name='hackerspace_spaceapi[contact][sip]' value='{$this->options->contact->sip}' class='regular-text code' type='url' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function irc_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('URL of the IRC channel, in the form irc://example.org/#channelname', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[contact][irc]' value='{$options->contact->irc}' class='regular-text code' type='url' />";
+        echo "<input name='hackerspace_spaceapi[contact][irc]' value='{$this->options->contact->irc}' class='regular-text code' type='url' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function twitter_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('Twitter handle, with leading @', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[contact][twitter]' value='{$options->contact->twitter}' class='regular-text' type='text' />";
+        echo "<input name='hackerspace_spaceapi[contact][twitter]' value='{$this->options->contact->twitter}' class='regular-text' type='text' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function facebook_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('Facebook account name.', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[contact][facebook]' value='{$options->contact->facebook}' class='regular-text' type='text' />";
+        echo "<input name='hackerspace_spaceapi[contact][facebook]' value='{$this->options->contact->facebook}' class='regular-text' type='text' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function identica_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('Identi.ca or StatusNet account, in the form yourspace@example.org', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[contact][identica]' value='{$options->contact->identica}' class='regular-text ltr' type='email' />";
+        echo "<input name='hackerspace_spaceapi[contact][identica]' value='{$this->options->contact->identica}' class='regular-text ltr' type='email' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function foursquare_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('Foursquare ID, in the form 4d8a9114d85f3704eab301dc', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[contact][foursquare]' value='{$options->contact->foursquare}' class='regular-text' type='text' />";
+        echo "<input name='hackerspace_spaceapi[contact][foursquare]' value='{$this->options->contact->foursquare}' class='regular-text' type='text' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function ml_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('The e-mail address of your mailing list.', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[contact][ml]' value='{$options->contact->ml}' class='regular-text ltr' type='email' />";
+        echo "<input name='hackerspace_spaceapi[contact][ml]' value='{$this->options->contact->ml}' class='regular-text ltr' type='email' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     public function jabber_field()
     {
-        $options = get_option('hackerspace_spaceapi');
         $description = __('A public Jabber/XMPP multi-user chatroom in the form chatroom@conference.example.net', 'wp-hackerspace');
-        echo "<input name='hackerspace_spaceapi[contact][jabber]' value='{$options->contact->jabber}' class='regular-text ltr' type='email' />";
+        echo "<input name='hackerspace_spaceapi[contact][jabber]' value='{$this->options->contact->jabber}' class='regular-text ltr' type='email' />";
         echo "<p class='description'>{$description}</p>";
     }
 
     // TODO issue report chanel is readonly and set up to 'email' for now, we need change this to combo boxes in future versions
     public function issue_report_channel_field() //read only field
     {
-        $options = get_option('hackerspace_spaceapi');
-        echo "<input name='hackerspace_spaceapi[issue_report_channels][0]' value='{$options->issue_report_channels[0]}' type='text' readonly />";
+        echo "<input name='hackerspace_spaceapi[issue_report_channels][0]' value='{$this->options->issue_report_channels[0]}' type='text' readonly />";
     }
 
 }
