@@ -8,6 +8,8 @@ class FeaturesSettings
 
     public function __construct()
     {
+        // TODO create default values for options
+        $this->options = get_option('hackerspace_features');
     }
 
     // whitelist the features settings

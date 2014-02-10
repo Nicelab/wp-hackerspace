@@ -52,14 +52,13 @@ class WPHackerspace
         //}
         //update_option('hackerspace_plugin_spaceapi', $spaceapiarray);
 
-        include_once(plugin_dir_path(__FILE__).'includes/SpaceApiSettings.php'); //TODO use autoloader
-        $SpaceApiSettings = new SpaceApiSettings();
+        //include_once(plugin_dir_path(__FILE__).'includes/SpaceApiSettings.php'); //TODO use autoloader
+        //$SpaceApiSettings = new SpaceApiSettings();
 
-        if (false==get_option('hackerspace_spaceapi')) {
-            add_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
-        }
+        //if (false==get_option('hackerspace_spaceapi')) {
+        //    add_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
+        //}
         //update_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
-        //delete_option('hackerspace_plugin_features');
     }
 
     // activate the plugin
@@ -75,7 +74,8 @@ class WPHackerspace
     // uninstall the plugin
     public static function uninstall()
     {
-        //delete_option('hackerspace_spaceapi'); //TODO test this
+        delete_option('hackerspace_features');  //TODO test this
+        delete_option('hackerspace_spaceapi');
     }
 
     // register the plugin settings
