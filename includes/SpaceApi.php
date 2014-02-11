@@ -5,12 +5,13 @@
  * see http://spaceapi.net/documentation#documentation-tab-13
  */
 
+// TODO add spacefeed, cam, sensors->total members, projects
+
 class SpaceApi
 {
 
     const API_VERSION = '0.13';
 
-    // TODO move this in Settings.php ?
     // create the default (empty) spaceapi object for use with plugin settings forms
     public function set_default_spaceapi()
     {
@@ -33,6 +34,7 @@ class SpaceApi
         $spaceapi->contact->ml = "";
         $spaceapi->contact->jabber = "";
         $spaceapi->issue_report_channels = array('email');
+        $spaceapi->cache->schedule = "m.05";
 
         return $spaceapi;
     }
@@ -54,9 +56,13 @@ class SpaceApi
         if ($spaceapi->contact->ml == "") unset($spaceapi->contact->ml);
         if ($spaceapi->contact->jabber == "") unset($spaceapi->contact->jabber);
 
+        // TODO use Opening Hours plugin values
         // Add the open/close status
         $spaceapi->state->open = null;
-        // TODO add projects
+        // Add the default Wordpress Blog rss2 feed
+        $spaceapi->feeds->blog->type = "rss";
+        $spaceapi->feeds->blog->url = get_bloginfo('rss2_url');
+        // TODO add projects list from project post type
         return $spaceapi;
     }
 

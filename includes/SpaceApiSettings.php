@@ -49,6 +49,7 @@ class SpaceApiSettings
         add_settings_field('ml', __('Mailling list', 'wp-hackerspace'), array($this, 'ml_field'), 'hackerspace_spaceapi', 'contact_section');
         add_settings_field('jabber', __('Jabber', 'wp-hackerspace'), array($this, 'jabber_field'), 'hackerspace_spaceapi', 'contact_section');
         add_settings_field('issue_report_channel', __('Issue report channel', 'wp-hackerspace'), array($this, 'issue_report_channel_field'), 'hackerspace_spaceapi', 'other_section');
+        add_settings_field('cache_schedule', __('Cache schedule', 'wp-hackerspace'), array($this, 'cache_schedule_field'), 'hackerspace_spaceapi', 'other_section');
     }
 
     // validate the Space Api settings
@@ -215,7 +216,17 @@ class SpaceApiSettings
     // TODO issue report chanel is readonly and set up to 'email' for now, we need change this to combo boxes in future versions
     public function issue_report_channel_field() //read only field
     {
+        $description = __('Communication channels where you want to get automated issue reports about your SpaceAPI endpoint from the validator.', 'wp-hackerspace');
         echo "<input name='hackerspace_spaceapi[issue_report_channels][0]' value='{$this->options->issue_report_channels[0]}' type='text' readonly />";
+        echo "<p class='description'>{$description}</p>";
+    }
+
+    // TODO the cache setting is fixed to 5 minutes for now, we need to change this to a dropdow list
+    public function cache_schedule_field() //read only field
+    {
+        $description = __('Cache update cycle of your SpaceAPI endpoint.', 'wp-hackerspace');
+        echo "<input name='hackerspace_spaceapi[cache][schedule]' value='{$this->options->cache->schedule}' type='text' readonly />";
+        echo "<p class='description'>{$description}</p>";
     }
 
 }
