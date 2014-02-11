@@ -49,7 +49,7 @@ class SpaceApi
         if ($spaceapi->contact->irc == "") unset($spaceapi->contact->irc);
         if ($spaceapi->contact->twitter == "") unset($spaceapi->contact->twitter);
         if ($spaceapi->contact->facebook == "") unset($spaceapi->contact->facebook);
-        if ($spaceapi->contact->identica == "") unset($spaceapi->contact->irc);
+        if ($spaceapi->contact->identica == "") unset($spaceapi->contact->identica);
         if ($spaceapi->contact->foursquare == "") unset($spaceapi->contact->foursquare);
         if ($spaceapi->contact->ml == "") unset($spaceapi->contact->ml);
         if ($spaceapi->contact->jabber == "") unset($spaceapi->contact->jabber);
@@ -60,12 +60,13 @@ class SpaceApi
         return $spaceapi;
     }
 
-    //render json encoded Space Api infos
+    // TODO add exception if UTF-8 encoding error
+    // render json encoded Space Api infos
     public function spaceapi_json()
     {
-        header('Access-Control-Allow-Origin: *;');
-        header('Content-Type: application/json; charset='.get_option('blog_charset'));
-        header('Cache-Control: no-cache;');
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json');
+        header('Cache-Control: no-cache');
         $spaceapi = $this->get_spaceapi();
         echo json_encode($spaceapi);
     }
