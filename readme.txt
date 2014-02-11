@@ -32,8 +32,3 @@ Main limitations: no membership support, no events support.
 
 == Changelog ==
 
-= 0.2 =
-Add the Space Api setting page and Json feed
-
-= 0.1 =
-Bootstaping the plugin

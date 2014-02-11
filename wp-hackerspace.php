@@ -5,7 +5,7 @@
  * Author: Nicelab.org
  * Author URI: http://nicelab.org/
  * Description: Add custom post types useful for hackerspaces and expose informations trough the Space API.
- * Version: 0.2
+ * Version: 0.3
  * Copyright: (c) 2014 Nicelab.org
  * License: Expat/MIT License
  * Text Domain: wp-hackerspace
@@ -37,6 +37,11 @@ class WPHackerspace
 
         // enable the contextual help
         add_action('contextual_help', array($this, 'plugin_contextual_help'), 10, 3);
+
+        // enable the Project post type
+        include_once(plugin_dir_path(__FILE__).'includes/ProjectPostType.php');
+        $ProjectPostType = new ProjectPostType;
+        add_action('init', array($ProjectPostType, 'register_project_post_type'));
 
         // enable a settings link in the WordPress plugins menu
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
