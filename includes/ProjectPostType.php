@@ -16,7 +16,7 @@ class ProjectPostType
             ),
             'public'            => true,
             'menu_position'     => 21,
-            'menu_icon'         => 'dashicons-hammer'
+            'menu_icon'         => 'dashicons-hammer',
         ));
     }
 

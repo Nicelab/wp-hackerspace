@@ -10,7 +10,7 @@ class SpaceApiSettings
     public function __construct()
     {
         // create default values for options
-        if (false==get_option('hackerspace_spaceapi')) {
+        if (false == get_option('hackerspace_spaceapi')) {
             // TODO move default values here ?
             include_once(plugin_dir_path(__FILE__).'SpaceApi.php'); //TODO use autoloader
             $SpaceApi = new SpaceApi();

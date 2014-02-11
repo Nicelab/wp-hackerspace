@@ -46,7 +46,6 @@ class WPHackerspace
         // enable a settings link in the WordPress plugins menu
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
 
-
         // Temporary debug lines until an update mecanism if added. Uncomment to reset default values or missing ones after upgrade
         //include_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php'); //TODO use autoloader
         //$SpaceApi = new SpaceApi();
@@ -115,21 +114,21 @@ class WPHackerspace
         $SpaceApiSettings = new SpaceApiSettings();
         $spaceapi_help_tab = $SpaceApiSettings->help_tab();
 
-        if ($screen_id=='settings_page_hackerspace_options') {
+        if ($screen_id == 'settings_page_hackerspace_options') {
             $screen->add_help_tab(array(
                 'id'        => 'wp-hackerspace-overview',
                 'title'     => __('Overview', 'wp-hackerspace'),
-                'content'   => '<p>Overview help text</p>'
+                'content'   => '<p>Overview help text</p>',
             ));
             $screen->add_help_tab(array(
                 'id'        => $features_help_tab->id,
                 'title'     => $features_help_tab->title,
-                'content'   => $features_help_tab->content
+                'content'   => $features_help_tab->content,
             ));
             $screen->add_help_tab(array(
                 'id'        => $spaceapi_help_tab->id,
                 'title'     => $spaceapi_help_tab->title,
-                'content'   => $spaceapi_help_tab->content
+                'content'   => $spaceapi_help_tab->content,
             ));
             // help sidebar links
             $screen->set_help_sidebar('<p><strong>'.__('For more information:', 'wp-hackerspace').'</strong></p>');

@@ -25,6 +25,7 @@ class FeaturesSettings
         $output = json_decode(json_encode($input));
         // sanitization
         // TODO add validation
+
         return $output;
     }
 
@@ -34,13 +35,13 @@ class FeaturesSettings
         $help_tab->id = 'wp-hackerspace-features';
         $help_tab->title = __('Features', 'wp-hackerspace');
         $help_tab->content = '<p>Features help text</p>';
+
         return $help_tab;
     }
 
     // render the main section description text
-//    public function main_section()
-//    {
-//    }
-
+    //public function main_section()
+    //{
+    //}
 
 }
