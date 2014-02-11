@@ -12,6 +12,7 @@
  * Domain Path: /languages
  */
 
+// TODO add an update mecanism
 
 // main class for the plugin
 class WPHackerspace
@@ -41,23 +42,9 @@ class WPHackerspace
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
 
 
-        // TODO move all this stuff in a better place (activate ?) (class constructors?)
-//        if (false==get_option('hackerspace_features')) {
-//            add_option('hackerspace_features');
-//        }
-
-
-        //if (false==get_option('hackerspace_plugin_spaceapi')) {
-            //add_option('hackerspace_plugin_spaceapi', $spaceapiarray);
-        //}
-        //update_option('hackerspace_plugin_spaceapi', $spaceapiarray);
-
-        //include_once(plugin_dir_path(__FILE__).'includes/SpaceApiSettings.php'); //TODO use autoloader
-        //$SpaceApiSettings = new SpaceApiSettings();
-
-        //if (false==get_option('hackerspace_spaceapi')) {
-        //    add_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
-        //}
+        // Temporary debug lines until an update mecanism if added. Uncomment to reset default values or missing ones after upgrade
+        //include_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php'); //TODO use autoloader
+        //$SpaceApi = new SpaceApi();
         //update_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
     }
 
