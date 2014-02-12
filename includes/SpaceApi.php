@@ -12,7 +12,11 @@ class SpaceApi
 
     const API_VERSION = '0.13';
 
-    // create the default (empty) spaceapi object for use with plugin settings forms
+    /**
+     * Create the default (empty) spaceapi object for use with plugin settings forms
+     *
+     * @return stdClass
+     */
     public function set_default_spaceapi()
     {
         $spaceapi = new stdClass;
@@ -39,7 +43,11 @@ class SpaceApi
         return $spaceapi;
     }
 
-    //return the space api infos
+    /**
+     * Return the space api infos
+     *
+     * @return stdClass
+     */
     public function get_spaceapi()
     {
         // get infos from settings
@@ -86,10 +94,14 @@ class SpaceApi
         return $spaceapi;
     }
 
-    // TODO add exception if UTF-8 encoding error
-    // render json encoded Space Api infos
+    /**
+     * Render json encoded Space Api infos
+     *
+     * @return string
+     */
     public function spaceapi_json()
     {
+        // TODO add exception if UTF-8 encoding error
         header('Access-Control-Allow-Origin: *');
         header('Content-Type: application/json');
         header('Cache-Control: no-cache');
