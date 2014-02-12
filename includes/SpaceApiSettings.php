@@ -123,7 +123,6 @@ class SpaceApiSettings
         echo '<p class="description">'.__('The postal address of your space. Example: Netzladen e.V., Breite Straße 74, 53111 Bonn, Germany', 'wp-hackerspace').'</p>';
     }
 
-    // TODO test coma/point, add step and max min
     public function lat_field()
     {
         echo '<input type="number" name="hackerspace_spaceapi[location][lat]" value="'.esc_attr($this->options->location->lat).'" class="small-text" required="required" />';
@@ -132,14 +131,14 @@ class SpaceApiSettings
 
     public function lon_field()
     {
-        echo '<input type="number" name="hackerspace_spaceapi[location][lon]" value="'.esc_attr($this->options->location->lon).'" class="small-text" required="required" />';
+        echo '<input type="number" name="hackerspace_spaceapi[location][lon]" value="'.esc_attr($this->options->location->lon).'" min="-180.000000" max="180.000000" class="small-text" required="required" />';
         echo '<p class="description">'.__('Longitude of your space location, in degree with decimal places. Use positive values for locations west of Greenwich, and negative values for locations east of Greenwich.', 'wp-hackerspace').'</p>';
     }
 
-    // email is required for now, because of issue_report_channels_field set up to default to this value
+    // email is required for now, because of issue_report_channels_field is set up to default to this value
     public function email_field()
     {
-        echo '<input type="email" name="hackerspace_spaceapi[location][address]" value="'.esc_attr($this->options->contact->email).'" class="regular-text ltr" required="required" />';
+        echo '<input type="email" name="hackerspace_spaceapi[contact][email]" value="'.esc_attr($this->options->contact->email).'" class="regular-text ltr" required="required" />';
         echo '<p class="description">'.__('E-mail address for contacting your space.', 'wp-hackerspace').'</p>';
     }
 
