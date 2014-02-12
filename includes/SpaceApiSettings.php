@@ -20,7 +20,9 @@ class SpaceApiSettings
         $this->options = get_option('hackerspace_spaceapi');
     }
 
-    // whitelist the Space Api settings
+    /**
+     * Whitelist the Space Api settings
+     */
     public function register_settings()
     {
         register_setting('hackerspace_spaceapi', 'hackerspace_spaceapi', array($this, 'settings_validate'));
@@ -52,7 +54,11 @@ class SpaceApiSettings
         add_settings_field('cache_schedule', __('Cache schedule', 'wp-hackerspace'), array($this, 'cache_schedule_field'), 'hackerspace_spaceapi', 'other_section');
     }
 
-    // validate the Space Api settings
+    /**
+     * Validate the Space Api settings
+     *
+     * @return string
+     */
     public function settings_validate($input)
     {
         // input options are in an array, we use a stdClass object
@@ -61,6 +67,7 @@ class SpaceApiSettings
         $output->location->lat = (float)$output->location->lat; // html form have saved this as text instead off numbers
         $output->location->lon = (float)$output->location->lon;
         // TODO add validation
+
         return $output;
     }
 
@@ -73,7 +80,9 @@ class SpaceApiSettings
         return $help_tab;
     }
 
-    // render the main section description text
+    /**
+     * Render the main section description text
+     */
     public function main_section()
     {
         _e('Main informations about your space.', 'wp-hackerspace');

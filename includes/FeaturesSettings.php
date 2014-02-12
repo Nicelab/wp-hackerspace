@@ -12,13 +12,19 @@ class FeaturesSettings
         $this->options = get_option('hackerspace_features');
     }
 
-    // whitelist the features settings
+    /**
+     * Whitelist the features settings
+     */
     public function register_settings()
     {
         register_setting('hackerspace_features', 'hackerspace_features', array($this, 'settings_validate'));
     }
 
-    // validate the plugin features settings
+    /**
+     * Validate the plugin features settings
+     *
+     * @return string
+     */
     public function settings_validate($input)
     {
         // input options are in an array, we use a stdClass object

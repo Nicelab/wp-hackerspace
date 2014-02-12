@@ -15,7 +15,7 @@ class SpaceApi
     /**
      * Create the default (empty) spaceapi object for use with plugin settings forms
      *
-     * @return stdClass
+     * @return stdClass object
      */
     public function set_default_spaceapi()
     {
@@ -46,7 +46,7 @@ class SpaceApi
     /**
      * Return the space api infos
      *
-     * @return stdClass
+     * @return stdClass object
      */
     public function get_spaceapi()
     {
@@ -96,8 +96,6 @@ class SpaceApi
 
     /**
      * Render json encoded Space Api infos
-     *
-     * @return string
      */
     public function spaceapi_json()
     {

@@ -14,10 +14,12 @@
 
 // TODO add an update mecanism
 
-// main class for the plugin
+/**
+ * Main class for the plugin
+ */
 class WPHackerspace
 {
-    // class contructor
+
     public function __construct()
     {
         // load translations
@@ -52,24 +54,32 @@ class WPHackerspace
         //update_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
     }
 
-    // activate the plugin
+    /**
+     * Activate the plugin
+     */
     public static function activate()
     {
     }
 
-    // deactivate the plugin
+    /**
+     * Deactivate the plugin
+     */
     public static function deactivate()
     {
     }
 
-    // uninstall the plugin
+    /**
+     * Uninstall the plugin
+     */
     public static function uninstall()
     {
         delete_option('hackerspace_features');  //TODO test this
         delete_option('hackerspace_spaceapi');
     }
 
-    // register the plugin settings
+    /**
+     * Register the plugin settings
+     */
     public function admin_init()
     {
         // TODO tests between serialisation between object, array and JSON
@@ -83,7 +93,9 @@ class WPHackerspace
         $SpaceApiSettings->register_settings();
     }
 
-    // configure the plugin settings menu
+    /**
+     * Configure the plugin settings menu
+     */
     public function admin_menu()
     {
         add_options_page(
@@ -95,7 +107,9 @@ class WPHackerspace
         );
     }
 
-    // render the settings template
+    /**
+     * Render the settings template
+     */
     public function plugin_settings_template()
     {
         if (! current_user_can('manage_options')) {
@@ -104,7 +118,9 @@ class WPHackerspace
         include(sprintf(plugin_dir_path(__FILE__).'templates/settings.php'));
     }
 
-    // render the contextual help drop-down menu
+    /**
+     * Render the contextual help drop-down menu
+     */
     public function plugin_contextual_help($contextual_help, $screen_id, $screen)
     {
         include_once(plugin_dir_path(__FILE__).'includes/FeaturesSettings.php'); //TODO use autoloader
@@ -135,14 +151,21 @@ class WPHackerspace
         }
     }
 
-    // render the settings link in the in the WordPress plugins menu
+    /**
+     * Render the settings link in the in the WordPress plugins menu
+     *
+     * @return object
+     */
     public function plugin_action_links($links)
     {
         $links[] = '<a href="'.get_admin_url(null, 'options-general.php?page=hackerspace_options').'">'.__('Settings', 'wp-hackerspace').'</a>';
+
         return $links;
     }
 
-    // render the Space Api json feed
+    /**
+     * Render the Space Api json feed
+     */
     public function spaceapi_feed()
     {
         include_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php'); //TODO use autoloader
@@ -150,7 +173,9 @@ class WPHackerspace
         add_feed('spaceapi', array($SpaceApi, 'spaceapi_json'));
     }
 
-    // add the spaceapi rel element to the blog headers
+    /**
+     *  Add the spaceapi rel element to the blog headers
+     */
     public function spaceapi_rel()
     {
         echo '<link rel="space-api" href="'.get_bloginfo('url').'?feed=spaceapi" />'."\n";
