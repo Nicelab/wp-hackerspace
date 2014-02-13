@@ -7,6 +7,9 @@
 class ProjectPostType
 {
 
+    /**
+     * Register the custom post type for hackerspace Projects
+     */
     public function register_project_post_type()
     {
         register_post_type('space_project', array(
