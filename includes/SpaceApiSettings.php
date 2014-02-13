@@ -183,7 +183,7 @@ class SpaceApiSettings
 
     public function identica_field()
     {
-        echo '<input type="email" name="hackerspace_spaceapi[location][identica]" value="'.esc_attr($this->options->contact->identica).'" class="regular-text ltr" />';
+        echo '<input type="email" name="hackerspace_spaceapi[contact][identica]" value="'.esc_attr($this->options->contact->identica).'" class="regular-text ltr" />';
         echo '<p class="description">'.__('Identi.ca or StatusNet account, in the form yourspace@example.org', 'wp-hackerspace').'</p>';
     }
 
@@ -195,13 +195,13 @@ class SpaceApiSettings
 
     public function ml_field()
     {
-        echo '<input type="email" name="hackerspace_spaceapi[location][ml]" value="'.esc_attr($this->options->contact->ml).'" class="regular-text ltr" />';
+        echo '<input type="email" name="hackerspace_spaceapi[contact][ml]" value="'.esc_attr($this->options->contact->ml).'" class="regular-text ltr" />';
         echo '<p class="description">'.__('The e-mail address of your mailing list.', 'wp-hackerspace').'</p>';
     }
 
     public function jabber_field()
     {
-        echo '<input type="email" name="hackerspace_spaceapi[location][jabber]" value="'.esc_attr($this->options->contact->jabber).'" class="regular-text ltr" />';
+        echo '<input type="email" name="hackerspace_spaceapi[contact][jabber]" value="'.esc_attr($this->options->contact->jabber).'" class="regular-text ltr" />';
         echo '<p class="description">'.__('A public Jabber/XMPP multi-user chatroom in the form chatroom@conference.example.net', 'wp-hackerspace').'</p>';
     }
 
