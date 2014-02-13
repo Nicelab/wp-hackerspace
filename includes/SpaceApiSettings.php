@@ -9,10 +9,10 @@ class SpaceApiSettings
 
     public function __construct()
     {
-        // create default values for options
+        // TODO move this in activate
+        // create default values for options on first install
         if (false == get_option('hackerspace_spaceapi')) {
             // TODO move default values here ?
-            include_once(plugin_dir_path(__FILE__).'SpaceApi.php'); //TODO use autoloader
             $SpaceApi = new SpaceApi();
             add_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
         }

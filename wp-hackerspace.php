@@ -14,6 +14,14 @@
 
 // TODO add an update mecanism
 
+
+/* include required classes */
+require_once(plugin_dir_path(__FILE__).'includes/ProjectPostType.php');
+require_once(plugin_dir_path(__FILE__).'includes/FeaturesSettings.php');
+require_once(plugin_dir_path(__FILE__).'includes/SpaceApiSettings.php');
+require_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php');
+
+
 /**
  * Main class for the plugin
  */
@@ -41,7 +49,7 @@ class WPHackerspace
         add_action('contextual_help', array($this, 'plugin_contextual_help'), 10, 3);
 
         // enable the Project post type
-        include_once(plugin_dir_path(__FILE__).'includes/ProjectPostType.php');
+        //include_once(plugin_dir_path(__FILE__).'includes/ProjectPostType.php');
         $ProjectPostType = new ProjectPostType;
         add_action('init', array($ProjectPostType, 'register_project_post_type'));
 
@@ -49,7 +57,6 @@ class WPHackerspace
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
 
         // Temporary debug lines until an update mecanism if added. Uncomment to reset default values or missing ones after upgrade
-        //include_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php'); //TODO use autoloader
         //$SpaceApi = new SpaceApi();
         //update_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
     }
@@ -83,9 +90,7 @@ class WPHackerspace
     public function admin_init()
     {
         // TODO tests between serialisation between object, array and JSON
-        include_once(plugin_dir_path(__FILE__).'includes/FeaturesSettings.php'); //TODO use autoloader
         $FeaturesSettings = new FeaturesSettings();
-        include_once(plugin_dir_path(__FILE__).'includes/SpaceApiSettings.php');
         $SpaceApiSettings = new SpaceApiSettings(); //TODO create one class for space api settings and one for features ?
         //register_setting('hackerspace_features', 'hackerspace_features', array($Settings, 'hackerspace_features_validate'));
 
@@ -123,10 +128,8 @@ class WPHackerspace
      */
     public function plugin_contextual_help($contextual_help, $screen_id, $screen)
     {
-        include_once(plugin_dir_path(__FILE__).'includes/FeaturesSettings.php'); //TODO use autoloader
         $FeaturesSettings = new FeaturesSettings();
         $features_help_tab = $FeaturesSettings->help_tab();
-        include_once(plugin_dir_path(__FILE__).'includes/SpaceApiSettings.php'); //TODO use autoloader
         $SpaceApiSettings = new SpaceApiSettings();
         $spaceapi_help_tab = $SpaceApiSettings->help_tab();
 
@@ -168,7 +171,6 @@ class WPHackerspace
      */
     public function spaceapi_feed()
     {
-        include_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php'); //TODO use autoloader
         $SpaceApi = new SpaceApi();
         add_feed('spaceapi', array($SpaceApi, 'spaceapi_json'));
     }
