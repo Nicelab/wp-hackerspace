@@ -15,17 +15,25 @@
 <!-- Add warnings for TODO and FIXME comments -->
 <rule ref="Generic.Commenting" />
 <!-- Verifies the doc comments for classes -->
-<rule ref="PEAR.Commenting.ClassComment" />
+<rule ref="PEAR.Commenting.ClassComment">
+    <!-- classes need documentation but not all the PEAR required tags -->
+    <exclude name="PEAR.Commenting.ClassComment.MissingTag" />
+</rule>
 <!-- Verifies the doc comments for functions -->
 <rule ref="PEAR.Commenting.FunctionComment" />
 <!-- Checks that no perl-style comments are used -->
-<rule ref="PEAR.Commenting.InlineComment" />
+<rule ref="PEAR.Commenting.InlineComment">
+    <!-- no need for @return tags everywhere -->
+    <exclude name="PEAR.Commenting.FunctionComment.MissingReturn" />
+</rule>
 <!-- Verifies that inline control statements are not present -->
 <rule ref="Generic.ControlStructures.InlineControlStructure" />
 <!-- Detecting BOMs that may corrupt application work -->
 <rule ref="Generic.Files.ByteOrderMark" />
 <!-- Ensures the file ends with a newline character -->
 <rule ref="Generic.Files.EndFileNewline" />
+<!-- Checks that all file names are lowercased -->
+<rule ref="Generic.Files.LowercasedFilename" />
 <!-- Checks that only one class is declared per file -->
 <rule ref="Generic.Files.OneClassPerFile" />
 <!-- Checks that the file does not end with a closing tag -->
