@@ -24,10 +24,16 @@ require_once(plugin_dir_path(__FILE__).'includes/class-space-api.php');
 
 /**
  * Main class for the plugin
+ *
+ * @since 0.1
  */
 class Hackerspace
 {
-
+    /**
+     * Constructor for the Hackerspace class
+     *
+     * Register Wordpress plugins hooks
+     */
     public function __construct()
     {
         // load translations

@@ -1,15 +1,18 @@
 <?php
+
 /**
- * Plugin Name: Hackerspace
+ * Render the setting form for the Space Api
+ *
+ * @since 0.3
  */
-
-
 class Settings_Space_Api
 {
-
+    /**
+     * Constructor for the Settings_Features class
+     */
     public function __construct()
     {
-        // TODO move this in activate
+        // TODO move this in activate ?
         // create default values for options on first install
         if (false == get_option('hackerspace_spaceapi')) {
             // TODO move default values here ?
@@ -57,11 +60,13 @@ class Settings_Space_Api
     /**
      * Validate the Space Api settings
      *
-     * @return string
+     * @param array $input Inputed values from the settings form
+     *
+     * @return stdClass object
      */
     public function settings_validate($input)
     {
-        // input options are in an array, we use a stdClass object
+        // convert inputed array options to a stdClass object
         $output = json_decode(json_encode($input));
         // sanitization
         $output->location->lat = (float)$output->location->lat; // html form have saved this as text instead off numbers
@@ -71,12 +76,18 @@ class Settings_Space_Api
         return $output;
     }
 
+    /**
+     * Generate an object to display top help tab
+     *
+     * @return stdClass object
+     */
     public function help_tab()
     {
         $help_tab = new stdClass;
         $help_tab->id = 'wp-hackerspace-spaceapi';
         $help_tab->title = __('Space Api', 'wp-hackerspace');
         $help_tab->content = '<p>Space Api help text</p>';
+
         return $help_tab;
     }
 
@@ -88,11 +99,17 @@ class Settings_Space_Api
         _e('Main informations about your space.', 'wp-hackerspace');
     }
 
+    /**
+     * Render the location section description text
+     */
     public function location_section()
     {
         _e('Position data such as a postal address or geographic coordinates.', 'wp-hackerspace');
     }
 
+    /**
+     * Render the contact section description text
+     */
     public function contact_section()
     {
         _e('Contact information about your space. You must define at least one.', 'wp-hackerspace');
@@ -102,8 +119,10 @@ class Settings_Space_Api
     {
     }
 
-    // render the Space Api form fields
-    public function api_field() // readonly field
+    /**
+     *  Render the Space Api version field (readonly)
+     */
+    public function api_field()
     {
         echo '<input type="text" name="hackerspace_spaceapi[api]" value="'.esc_attr($this->options->api).'" class="regular-text" readonly />';
     }
@@ -144,7 +163,7 @@ class Settings_Space_Api
         echo '<p class="description">'.__('Longitude of your space location, in degree with decimal places. Use positive values for locations west of Greenwich, and negative values for locations east of Greenwich.', 'wp-hackerspace').'</p>';
     }
 
-    // email is required for now, because of issue_report_channels_field is set up to default to this value
+    // TODO email is required for now, because of issue_report_channels_field is set up to default to this value
     public function email_field()
     {
         echo '<input type="email" name="hackerspace_spaceapi[contact][email]" value="'.esc_attr($this->options->contact->email).'" class="regular-text ltr" required="required" />';

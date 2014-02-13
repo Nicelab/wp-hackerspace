@@ -1,14 +1,15 @@
 <?php
+
 /**
- * Plugin Name: Hackerspace
+ * Define the custom post type for Projects
+ *
+ * @since 0.3
  */
-
-
 class Post_Type_Project
 {
 
     /**
-     * Register the custom post type for hackerspace Projects
+     * Register the custom post type for Projects
      */
     public function register_project_post_type()
     {

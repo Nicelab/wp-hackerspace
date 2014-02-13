@@ -1,14 +1,17 @@
 <?php
+
 /**
- * Plugin Name: Hackerspace
+ * Get the Space Api infos and generate the json file
  *
+ * For more information about the Space Api see
  * see http://spaceapi.net/documentation#documentation-tab-13
+ *
+ * @since 0.3
  */
-
-// TODO add spacefeed, cam, sensors->total members, projects
-
 class Space_Api
 {
+
+    // TODO add spacefeed, cam, sensors->total members, projects
 
     const API_VERSION = '0.13';
 
@@ -44,7 +47,7 @@ class Space_Api
     }
 
     /**
-     * Return the space api infos
+     * Get the space api infos
      *
      * @return stdClass object
      */

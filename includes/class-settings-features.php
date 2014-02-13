@@ -1,11 +1,15 @@
 <?php
-/**
- * Plugin Name: Hackerspace
- */
 
+/**
+ * Render the setting form for the plugin features
+ *
+ * @since 0.3
+ */
 class Settings_Features
 {
-
+    /**
+     * Constructor for the Settings_Features class
+     */
     public function __construct()
     {
         // TODO create default values for options
@@ -23,11 +27,13 @@ class Settings_Features
     /**
      * Validate the plugin features settings
      *
-     * @return string
+     * @param array $input Inputed values from the settings form
+     *
+     * @return stdClass object
      */
     public function settings_validate($input)
     {
-        // input options are in an array, we use a stdClass object
+        // convert inputed array options to a stdClass object
         $output = json_decode(json_encode($input));
         // sanitization
         // TODO add validation
@@ -35,6 +41,11 @@ class Settings_Features
         return $output;
     }
 
+    /**
+     * Generate an object to display top help tab
+     *
+     * @return stdClass object
+     */
     public function help_tab()
     {
         $help_tab = new stdClass;
@@ -45,7 +56,9 @@ class Settings_Features
         return $help_tab;
     }
 
-    // render the main section description text
+    /**
+     * Render the main section description text
+     */
     //public function main_section()
     //{
     //}
