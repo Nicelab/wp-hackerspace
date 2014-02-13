@@ -4,7 +4,7 @@
  */
 
 
-class ProjectPostType
+class Post_Type_Project
 {
 
     /**

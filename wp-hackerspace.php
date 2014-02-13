@@ -25,7 +25,7 @@ require_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php');
 /**
  * Main class for the plugin
  */
-class WPHackerspace
+class Hackerspace
 {
 
     public function __construct()
@@ -50,8 +50,8 @@ class WPHackerspace
 
         // enable the Project post type
         //include_once(plugin_dir_path(__FILE__).'includes/ProjectPostType.php');
-        $ProjectPostType = new ProjectPostType;
-        add_action('init', array($ProjectPostType, 'register_project_post_type'));
+        $Post_Type_Project = new Post_Type_Project;
+        add_action('init', array($Post_Type_Project, 'register_project_post_type'));
 
         // enable a settings link in the WordPress plugins menu
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
@@ -90,12 +90,12 @@ class WPHackerspace
     public function admin_init()
     {
         // TODO tests between serialisation between object, array and JSON
-        $FeaturesSettings = new FeaturesSettings();
-        $SpaceApiSettings = new SpaceApiSettings(); //TODO create one class for space api settings and one for features ?
+        $Settings_Features = new Settings_Features();
+        $Settings_Space_Api = new Settings_Space_Api(); //TODO create one class for space api settings and one for features ?
         //register_setting('hackerspace_features', 'hackerspace_features', array($Settings, 'hackerspace_features_validate'));
 
-        $FeaturesSettings->register_settings();
-        $SpaceApiSettings->register_settings();
+        $Settings_Features->register_settings();
+        $Settings_Space_Api->register_settings();
     }
 
     /**
@@ -128,10 +128,10 @@ class WPHackerspace
      */
     public function plugin_contextual_help($contextual_help, $screen_id, $screen)
     {
-        $FeaturesSettings = new FeaturesSettings();
-        $features_help_tab = $FeaturesSettings->help_tab();
-        $SpaceApiSettings = new SpaceApiSettings();
-        $spaceapi_help_tab = $SpaceApiSettings->help_tab();
+        $Settings_Features = new Settings_Features();
+        $features_help_tab = $Settings_Features->help_tab();
+        $Settings_Space_Api = new Settings_Space_Api();
+        $spaceapi_help_tab = $Settings_Space_Api->help_tab();
 
         if ($screen_id == 'settings_page_hackerspace_options') {
             $screen->add_help_tab(array(
@@ -171,8 +171,8 @@ class WPHackerspace
      */
     public function spaceapi_feed()
     {
-        $SpaceApi = new SpaceApi();
-        add_feed('spaceapi', array($SpaceApi, 'spaceapi_json'));
+        $Space_Api = new Space_Api();
+        add_feed('spaceapi', array($Space_Api, 'spaceapi_json'));
     }
 
     /**
@@ -187,9 +187,9 @@ class WPHackerspace
 
 
 // register activation, deactivation and uninstall hooks
-register_activation_hook(__FILE__, array('WPHackerspace', 'activate'));
-register_deactivation_hook(__FILE__, array('WPHackerspace', 'deactivate'));
-register_uninstall_hook(__FILE__, array('WPHackerspace', 'uninstall'));
+register_activation_hook(__FILE__, array('Hackerspace', 'activate'));
+register_deactivation_hook(__FILE__, array('Hackerspace', 'deactivate'));
+register_uninstall_hook(__FILE__, array('Hackerspace', 'uninstall'));
 
 // instantiate the plugin class
-$wpHackerspace = new WPHackerspace();
+$Hackerspace = new Hackerspace();

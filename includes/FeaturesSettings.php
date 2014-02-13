@@ -3,7 +3,7 @@
  * Plugin Name: Hackerspace
  */
 
-class FeaturesSettings
+class Settings_Features
 {
 
     public function __construct()

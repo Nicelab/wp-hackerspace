@@ -7,7 +7,7 @@
 
 // TODO add spacefeed, cam, sensors->total members, projects
 
-class SpaceApi
+class Space_Api
 {
 
     const API_VERSION = '0.13';
