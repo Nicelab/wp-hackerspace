@@ -16,10 +16,10 @@
 
 
 /* include required classes */
-require_once(plugin_dir_path(__FILE__).'includes/ProjectPostType.php');
-require_once(plugin_dir_path(__FILE__).'includes/FeaturesSettings.php');
-require_once(plugin_dir_path(__FILE__).'includes/SpaceApiSettings.php');
-require_once(plugin_dir_path(__FILE__).'includes/SpaceApi.php');
+require_once(plugin_dir_path(__FILE__).'includes/class-post-type-project.php');
+require_once(plugin_dir_path(__FILE__).'includes/class-settings-features.php');
+require_once(plugin_dir_path(__FILE__).'includes/class-settings-space-api.php');
+require_once(plugin_dir_path(__FILE__).'includes/class-space-api.php');
 
 
 /**
