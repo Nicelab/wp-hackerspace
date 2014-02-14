@@ -70,6 +70,7 @@ class Hackerspace
         //update_option('hackerspace_spaceapi', $Space_Api->set_default_spaceapi());
 
         // instantiate the required external classes
+        $this->Post_Type_Project = new Post_Type_Project();
         $this->Settings_Features = new Settings_Features();
         $this->Settings_Space_Api = new Settings_Space_Api();
         $this->Space_Api = new Space_Api();
@@ -78,6 +79,8 @@ class Hackerspace
     /** Activate the plugin */
     public static function activate()
     {
+        // flush rewrite rules for custom post types permalinks
+        flush_rewrite_rules();
     }
 
     /** Deactivate the plugin */
@@ -132,6 +135,7 @@ class Hackerspace
     {
         $features_help_tab = $this->Settings_Features->help_tab();
         $spaceapi_help_tab = $this->Settings_Space_Api->help_tab();
+        $projects_help_tab = $this->Post_Type_Project->help_tab();
 
         if ($screen_id == 'settings_page_hackerspace_options') {
             $screen->add_help_tab(array(
@@ -153,6 +157,14 @@ class Hackerspace
             $screen->set_help_sidebar('<p><strong>'.__('For more information:', 'wp-hackerspace').'</strong></p>');
         }
 
+        if ($screen_id == 'hackerspace_project' || $screen_id == 'edit-hackerspace_project') {
+            $screen->add_help_tab(array(
+                'id'        => $projects_help_tab->id,
+                'title'     => $projects_help_tab->title,
+                'content'   => $projects_help_tab->content,
+            ));
+        }
+
         return $contextual_help;
     }
 
@@ -165,6 +177,7 @@ class Hackerspace
      */
     public function plugin_action_links($links)
     {
+
         $links[] = '<a href="'.get_admin_url(null, 'options-general.php?page=hackerspace_options').'">'.__('Settings', 'wp-hackerspace').'</a>';
 
         return $links;
