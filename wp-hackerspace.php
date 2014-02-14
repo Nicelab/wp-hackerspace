@@ -177,7 +177,6 @@ class Hackerspace
      */
     public function plugin_action_links($links)
     {
-
         $links[] = '<a href="'.get_admin_url(null, 'options-general.php?page=hackerspace_options').'">'.__('Settings', 'wp-hackerspace').'</a>';
 
         return $links;
