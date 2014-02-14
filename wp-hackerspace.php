@@ -36,6 +36,11 @@ class Hackerspace
      */
     public function __construct()
     {
+        // register activation, deactivation and uninstall hooks for the plugin
+        register_activation_hook(__FILE__, array($this, 'activate'));
+        register_deactivation_hook(__FILE__, array($this, 'deactivate'));
+        register_uninstall_hook(__FILE__, array($this, 'uninstall'));
+
         // load translations
         load_plugin_textdomain('wp-hackerspace', false, plugin_dir_path(__FILE__).'/languages');
 
@@ -183,11 +188,6 @@ class Hackerspace
 
 }
 
-
-// register activation, deactivation and uninstall hooks
-register_activation_hook(__FILE__, array('Hackerspace', 'activate'));
-register_deactivation_hook(__FILE__, array('Hackerspace', 'deactivate'));
-register_uninstall_hook(__FILE__, array('Hackerspace', 'uninstall'));
 
 // instantiate the plugin class
 $Hackerspace = new Hackerspace();
