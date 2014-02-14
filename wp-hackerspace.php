@@ -39,7 +39,7 @@ class Hackerspace
         // register activation, deactivation and uninstall hooks for the plugin
         register_activation_hook(__FILE__, array($this, 'activate'));
         register_deactivation_hook(__FILE__, array($this, 'deactivate'));
-        register_uninstall_hook(__FILE__, array($this, 'uninstall'));
+        register_uninstall_hook(__FILE__, array('Hackerspace', 'uninstall'));
 
         // load translations
         load_plugin_textdomain('wp-hackerspace', false, plugin_dir_path(__FILE__).'/languages');
@@ -91,10 +91,8 @@ class Hackerspace
     /** Register the plugin settings */
     public function admin_init()
     {
-        // TODO tests between serialisation between object, array and JSON
         $Settings_Features = new Settings_Features();
-        $Settings_Space_Api = new Settings_Space_Api(); //TODO create one class for space api settings and one for features ?
-        //register_setting('hackerspace_features', 'hackerspace_features', array($Settings, 'hackerspace_features_validate'));
+        $Settings_Space_Api = new Settings_Space_Api();
 
         $Settings_Features->register_settings();
         $Settings_Space_Api->register_settings();

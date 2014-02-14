@@ -36,8 +36,8 @@ if (isset($_GET['tab'])) {
     <form action="options.php" method="post">
     <?php
     if ($active_tab == 'features') {
-        //settings_fields('hackerspace_features');
-        //do_settings_sections('hackerspace_features');
+        settings_fields('hackerspace_features');
+        do_settings_sections('hackerspace_features');
     } elseif ($active_tab == 'spaceapi') {
         settings_fields('hackerspace_spaceapi');
         do_settings_sections('hackerspace_spaceapi');
