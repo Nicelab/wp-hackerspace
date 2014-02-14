@@ -60,8 +60,7 @@ class Hackerspace
         add_action('contextual_help', array($this, 'plugin_contextual_help'), 10, 3);
 
         // enable the Project post type
-        $Post_Type_Project = new Post_Type_Project;
-        add_action('init', array($Post_Type_Project, 'register_project_post_type'));
+        add_action('init', array('Post_Type_Project', 'register_project_post_type'));
 
         // enable a settings link in the WordPress plugins menu
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
@@ -69,6 +68,11 @@ class Hackerspace
         // Temporary debug lines until an update mecanism if added. Uncomment to reset default values or missing ones after upgrade
         //$Space_Api = new Space_Api();
         //update_option('hackerspace_spaceapi', $Space_Api->set_default_spaceapi());
+
+        // instantiate the required external classes
+        $this->Settings_Features = new Settings_Features();
+        $this->Settings_Space_Api = new Settings_Space_Api();
+        $this->Space_Api = new Space_Api();
     }
 
     /** Activate the plugin */
@@ -91,11 +95,8 @@ class Hackerspace
     /** Register the plugin settings */
     public function admin_init()
     {
-        $Settings_Features = new Settings_Features();
-        $Settings_Space_Api = new Settings_Space_Api();
-
-        $Settings_Features->register_settings();
-        $Settings_Space_Api->register_settings();
+        $this->Settings_Features->register_settings();
+        $this->Settings_Space_Api->register_settings();
     }
 
     /** Configure the plugin settings menu */
@@ -129,10 +130,8 @@ class Hackerspace
      */
     public function plugin_contextual_help($contextual_help, $screen_id, $screen)
     {
-        $Settings_Features = new Settings_Features();
-        $features_help_tab = $Settings_Features->help_tab();
-        $Settings_Space_Api = new Settings_Space_Api();
-        $spaceapi_help_tab = $Settings_Space_Api->help_tab();
+        $features_help_tab = $this->Settings_Features->help_tab();
+        $spaceapi_help_tab = $this->Settings_Space_Api->help_tab();
 
         if ($screen_id == 'settings_page_hackerspace_options') {
             $screen->add_help_tab(array(
@@ -174,8 +173,7 @@ class Hackerspace
     /** Render the Space Api json feed */
     public function spaceapi_feed()
     {
-        $Space_Api = new Space_Api();
-        add_feed('spaceapi', array($Space_Api, 'spaceapi_json'));
+        add_feed('spaceapi', array($this->Space_Api, 'spaceapi_json'));
     }
 
     /** Add the spaceapi rel element to the blog headers */
