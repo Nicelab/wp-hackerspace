@@ -73,7 +73,7 @@ class Settings_Space_Api
     }
 
     /**
-     * Generate an object to display top help tab
+     * Generate an object to display on top help tab
      *
      * @return stdClass object
      */
