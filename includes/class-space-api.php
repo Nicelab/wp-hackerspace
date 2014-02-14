@@ -97,9 +97,7 @@ class Space_Api
         return $spaceapi;
     }
 
-    /**
-     * Render json encoded Space Api infos
-     */
+    /** Render json encoded Space Api infos */
     public function spaceapi_json()
     {
         // TODO add exception if UTF-8 encoding error

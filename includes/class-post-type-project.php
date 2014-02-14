@@ -8,9 +8,7 @@
 class Post_Type_Project
 {
 
-    /**
-     * Register the custom post type for Projects
-     */
+    /** Register the custom post type for Projects */
     public function register_project_post_type()
     {
         register_post_type('space_project', array(

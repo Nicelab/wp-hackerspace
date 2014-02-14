@@ -7,18 +7,14 @@
  */
 class Settings_Features
 {
-    /**
-     * Constructor for the Settings_Features class
-     */
+    /** Constructor for the Settings_Features class */
     public function __construct()
     {
         // TODO create default values for options
         $this->options = get_option('hackerspace_features');
     }
 
-    /**
-     * Whitelist the features settings
-     */
+    /** Whitelist the features settings */
     public function register_settings()
     {
         register_setting('hackerspace_features', 'hackerspace_features', array($this, 'settings_validate'));
@@ -56,11 +52,10 @@ class Settings_Features
         return $help_tab;
     }
 
-    /**
-     * Render the main section description text
-     */
-    //public function main_section()
-    //{
-    //}
+    /** Render the main section description text */
+    public function main_section()
+    {
+        //TODO add description text
+    }
 
 }
