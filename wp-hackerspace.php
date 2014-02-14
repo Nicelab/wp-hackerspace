@@ -55,7 +55,6 @@ class Hackerspace
         add_action('contextual_help', array($this, 'plugin_contextual_help'), 10, 3);
 
         // enable the Project post type
-        //include_once(plugin_dir_path(__FILE__).'includes/ProjectPostType.php');
         $Post_Type_Project = new Post_Type_Project;
         add_action('init', array($Post_Type_Project, 'register_project_post_type'));
 
@@ -63,8 +62,8 @@ class Hackerspace
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
 
         // Temporary debug lines until an update mecanism if added. Uncomment to reset default values or missing ones after upgrade
-        //$SpaceApi = new SpaceApi();
-        //update_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
+        //$Space_Api = new Space_Api();
+        //update_option('hackerspace_spaceapi', $Space_Api->set_default_spaceapi());
     }
 
     /** Activate the plugin */
