@@ -8,6 +8,15 @@
 class Post_Type_Project
 {
 
+    /** Constructor for the Post_Type_Project class */
+    public function __construct()
+    {
+        // register the project meta boxes
+        add_action('add_meta_boxes', array($this, 'register_project_meta_boxes'));
+        // add a save callback for saving additional fields
+        add_action('save_post', array( $this, 'save_meta_boxes'));
+    }
+
     /**
      * Generate an object to display on top help tab
      *
@@ -23,13 +32,67 @@ class Post_Type_Project
         return $help_tab;
     }
 
-
-    /** Register custom fields for the Project custom post type */
-    public function projects_metaboxes()
+    /** Register meta boxes for the Project custom post type */
+    public function register_project_meta_boxes()
     {
-        //add_meta_box('project_url', 'Project url', 'project_location', 'projectss', 'side', 'default');
+        add_meta_box(
+            'project_repository_url',
+            __('Repository url', 'wp-hackerspace'),
+            array($this, 'render_repository_url_meta_box'),
+            'hackerspace_project',
+            'normal',
+            'high'
+            );
     }
 
+//TODO all additional fields in one box
+//Additional fields : author / person to contact / status / license /
+//TODO add a template page to display addictional fields
+
+    /**
+     * Render the repository url field
+     *
+     * @param WP_Post $post WordPress post object.
+     */
+    public function render_repository_url_meta_box($post)
+    {
+        $value = get_post_meta($post->ID, '_project_repository_url', true);
+        wp_nonce_field('project_repository_url_meta_box', 'project_repository_url_meta_box_nonce');
+        //echo '';
+        echo '<input type="url" name="project_repository_url" value="'.esc_attr($value).'" class="regular-text code" />';
+        echo '<p class="description">'.__('URL of the code source repository.', 'wp-hackerspace').'</p>';
+    }
+
+    /**
+     * Save the post meta fields in the WordPress database
+     *
+     * @param int $post_id ID of the WordPress post.
+     */
+    public function save_meta_boxes($post_id)
+    {
+        // Check the nonce is set
+        if (! isset($_POST['project_repository_url_meta_box_nonce'])) {
+            return $post_id;
+        }
+        // Check the nonce is valid
+        if (! wp_verify_nonce($_POST['project_repository_url_meta_box_nonce'], 'project_repository_url_meta_box')) {
+            return $post_id;
+        }
+        // Do not save in the database if it's an autosave
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return $post_id;
+        }
+        // TODO add user rights checks
+        // Sanitize inputs
+        $repository_url = sanitize_text_field($_POST['project_repository_url']);
+        // Update the field
+        update_post_meta($post_id, '_project_repository_url', $repository_url);
+    }
+
+    ///** Update various user messages*/
+    //public function post_updated_messages()
+    //{
+    //}
 
     /** Register the custom post type for Projects */
     public function register_project_post_type()
@@ -58,7 +121,6 @@ class Post_Type_Project
                 'title',
                 'editor',
                 'thumbnail',
-                'custom-fields',
                 'revisions',
             ),
             'taxonomies'         => array(
