@@ -8,36 +8,85 @@
 class Post_Type_Project
 {
 
+//TODO add a template page to display additional fields
+
     /** Constructor for the Post_Type_Project class */
     public function __construct()
     {
-        // register the project meta boxe
+        // set the messages who appears on project update
+        add_filter('post_updated_messages', array($this, 'post_updated_messages'));
+        // set up default hidden meta boxes
+        add_filter('default_hidden_meta_boxes', array($this, 'hide_meta_boxes'), 10, 2);
+        // register the project meta box for additional fields
         add_action('add_meta_boxes', array($this, 'register_project_meta_box'));
         // add a save callback for saving additional fields
         add_action('save_post', array( $this, 'save_project_fields'));
-        // set up default hidden meta boxes
-        add_filter('default_hidden_meta_boxes', array($this, 'hide_meta_boxes'), 10, 2);
-        // set the messages who appears on update
-        add_filter('post_updated_messages', array($this, 'post_updated_messages'));
+    }
+
+    /** Register the custom post type for Projects */
+    public function register_project_post_type()
+    {
+        register_post_type('hackerspace_project', array(
+            'labels'             => array(
+                'name'               => __('Projects', 'wp-hackerspace'),
+                'singular_name'      => __('Project', 'wp-hackerspace'),
+                'add_new'            => __('Add New', 'wp-hackerspace'),
+                'add_new_item'       => __('Add New Project', 'wp-hackerspace'),
+                'edit_item'          => __('Edit Project', 'wp-hackerspace'),
+                'new_item'           => __('New Project', 'wp-hackerspace'),
+                'all_items'          => __('All Projects', 'wp-hackerspace'),
+                'view_item'          => __('View Project', 'wp-hackerspace'),
+                'search_items'       => __('Search Projects', 'wp-hackerspace'),
+                'not_found'          => __('No projects found', 'wp-hackerspace'),
+                'not_found_in_trash' => __('No projects found in Trash', 'wp-hackerspace'),
+                'parent_item_colon'  => '',
+                'menu_name'          => __('Projects', 'wp-hackerspace'),
+            ),
+            'public'             => true,
+            'menu_position'      => 21,
+            'menu_icon'          => 'dashicons-hammer',
+            //'capabilities' // TODO add user rights
+            'supports'           => array(
+                'title',
+                'editor',
+                'author',
+                'thumbnail',
+                'excerpt',
+                'revisions',
+            ),
+            'taxonomies'         => array(
+                'category',
+                'post_tag',
+            ),
+            'rewrite'            => array(
+                'slug'               => __('project', 'wp-hackerspace'), // hesitating between 'project' and 'projects'
+            ),
+        ));
     }
 
     /**
-     * Hide by default author, slug and revisions meta boxes for projects
+     * Set the messages who appears on update
      *
-     * @param  array     $hidden Hidden meta boxes
-     * @param  WP_Screen $screen WP_Screen object
+     * @param  array $messages Default messages
      *
-     * @return array     $hidden
+     * @return array $messages Messages for the Project post type
      */
-
-    public function hide_meta_boxes($hidden, $screen)
+    public function post_updated_messages($messages)
     {
-        $screen_id = $screen->id;
-        if ($screen_id == 'hackerspace_project') {
-            $hidden = array('revisionsdiv','slugdiv','authordiv');
-        }
+        global $post, $post_ID;
 
-        return $hidden;
+        $messages['hackerspace_project'] = array(
+            1 =>  sprintf(__('Project updated. <a href="%s">View project</a>', 'wp-hackerspace'), esc_url(get_permalink($post_ID))),
+            2 => __('Custom field updated.', 'wp-hackerspace'),
+            5 =>  isset($_GET['revision']) ? sprintf(__('Project restored to revision from %s', 'wp-hackerspace'), wp_post_revision_title((int)$_GET['revision'], false)) : false,
+            6 =>  sprintf(__('Project published. <a href="%s">View project</a>', 'wp-hackerspace'), esc_url(get_permalink($post_ID))),
+            7 =>  __('Project saved.', 'wp-hackerspace'),
+            8 =>  sprintf(__('Project submitted. <a target="_blank" href="%s">Preview project</a>', 'wp-hackerspace'), esc_url(add_query_arg('preview', 'true', get_permalink($post_ID)))),
+            9 =>  sprintf(__('Project scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview project</a>', 'wp-hackerspace'), date_i18n(__('M j, Y @ G:i'), strtotime($post->post_date)), esc_url(get_permalink($post_ID))),
+            10 => sprintf(__('Project draft updated. <a target="_blank" href="%s">Preview project</a>', 'wp-hackerspace'), esc_url(add_query_arg('preview', 'true', get_permalink($post_ID)))),
+        );
+
+        return $messages;
     }
 
     /**
@@ -55,6 +104,25 @@ class Post_Type_Project
         return $help_tab;
     }
 
+    /**
+     * Hide by default author, slug and revisions meta boxes for project post types
+     *
+     * @param  array     $hidden Hidden meta boxes
+     * @param  WP_Screen $screen WP_Screen object
+     *
+     * @return array     $hidden
+     */
+
+    public function hide_meta_boxes($hidden, $screen)
+    {
+        $screen_id = $screen->id;
+        if ($screen_id == 'hackerspace_project') {
+            $hidden = array('revisionsdiv','slugdiv','authordiv');
+        }
+
+        return $hidden;
+    }
+
     /** Register the meta box used for the projects additional fields */
     public function register_project_meta_box()
     {
@@ -67,8 +135,6 @@ class Post_Type_Project
             'high'
             );
     }
-
-//TODO add a template page to display addictional fields
 
     /**
      * Render the project additional fields in the meta box
@@ -121,72 +187,6 @@ class Post_Type_Project
         update_post_meta($post_id, '_project_status', $status);
         update_post_meta($post_id, '_project_contact', $contact);
         update_post_meta($post_id, '_project_repository_url', $repository_url);
-    }
-
-    /**
-     * Set the messages who appears on update
-     *
-     * @param  array $messages Default messages
-     *
-     * @return array $messages Messages for the Project post type
-     */
-    public function post_updated_messages($messages)
-    {
-        global $post, $post_ID;
-
-        $messages['hackerspace_project'] = array(
-            1 =>  sprintf(__('Project updated. <a href="%s">View project</a>', 'wp-hackerspace'), esc_url(get_permalink($post_ID))),
-            2 => __('Custom field updated.', 'wp-hackerspace'),
-            5 =>  isset($_GET['revision']) ? sprintf(__('Project restored to revision from %s', 'wp-hackerspace'), wp_post_revision_title((int)$_GET['revision'], false)) : false,
-            6 =>  sprintf(__('Project published. <a href="%s">View project</a>', 'wp-hackerspace'), esc_url(get_permalink($post_ID))),
-            7 =>  __('Project saved.', 'wp-hackerspace'),
-            8 =>  sprintf(__('Project submitted. <a target="_blank" href="%s">Preview project</a>', 'wp-hackerspace'), esc_url(add_query_arg('preview', 'true', get_permalink($post_ID)))),
-            9 =>  sprintf(__('Project scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview project</a>', 'wp-hackerspace'), date_i18n(__('M j, Y @ G:i'), strtotime($post->post_date)), esc_url(get_permalink($post_ID))),
-            10 => sprintf(__('Project draft updated. <a target="_blank" href="%s">Preview project</a>', 'wp-hackerspace'), esc_url(add_query_arg('preview', 'true', get_permalink($post_ID)))),
-        );
-
-        return $messages;
-    }
-
-    /** Register the custom post type for Projects */
-    public function register_project_post_type()
-    {
-        register_post_type('hackerspace_project', array(
-            'labels'             => array(
-                'name'               => __('Projects', 'wp-hackerspace'),
-                'singular_name'      => __('Project', 'wp-hackerspace'),
-                'add_new'            => __('Add New', 'wp-hackerspace'),
-                'add_new_item'       => __('Add New Project', 'wp-hackerspace'),
-                'edit_item'          => __('Edit Project', 'wp-hackerspace'),
-                'new_item'           => __('New Project', 'wp-hackerspace'),
-                'all_items'          => __('All Projects', 'wp-hackerspace'),
-                'view_item'          => __('View Project', 'wp-hackerspace'),
-                'search_items'       => __('Search Projects', 'wp-hackerspace'),
-                'not_found'          => __('No projects found', 'wp-hackerspace'),
-                'not_found_in_trash' => __('No projects found in Trash', 'wp-hackerspace'),
-                'parent_item_colon'  => '',
-                'menu_name'          => __('Projects', 'wp-hackerspace'),
-            ),
-            'public'             => true,
-            'menu_position'      => 21,
-            'menu_icon'          => 'dashicons-hammer',
-            //'capabilities' // TODO add user rights
-            'supports'           => array(
-                'title',
-                'editor',
-                'author',
-                'thumbnail',
-                'excerpt',
-                'revisions',
-            ),
-            'taxonomies'         => array(
-                'category',
-                'post_tag',
-            ),
-            'rewrite'            => array(
-                'slug'               => __('project', 'wp-hackerspace'), // hesitating between 'project' and 'projects'
-            ),
-        ));
     }
 
 }
