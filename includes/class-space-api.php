@@ -89,7 +89,9 @@ class Space_Api
 
         // TODO use Opening Hours plugin values
         // Add the open/close status
-        $spaceapi->state->open = null;
+        $Space_State = new Space_State();
+        //$spaceapi->state->open = null;
+        $spaceapi->state->open = $Space_State->is_open();
         // Add the default Wordpress Blog rss2 feed
         $spaceapi->feeds->blog->type = 'rss';
         $spaceapi->feeds->blog->url = get_bloginfo('rss2_url');

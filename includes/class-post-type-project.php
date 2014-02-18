@@ -46,6 +46,7 @@ class Post_Type_Project
             'menu_position'      => 21,
             'menu_icon'          => 'dashicons-hammer',
             //'capabilities' // TODO add user rights
+            //TODO archive parameter ?
             'supports'           => array(
                 'title',
                 'editor',
