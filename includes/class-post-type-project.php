@@ -67,23 +67,24 @@ class Post_Type_Project
     /**
      * Set the messages who appears on update
      *
-     * @param  array $messages Default messages
+     * @param array $messages Default messages
      *
      * @return array $messages Messages for the Project post type
      */
     public function post_updated_messages($messages)
     {
-        global $post, $post_ID;
+        $post_id = get_post()->id;
+        $post_date = get_post()->post_date;
 
         $messages['hackerspace_project'] = array(
-            1 =>  sprintf(__('Project updated. <a href="%s">View project</a>', 'wp-hackerspace'), esc_url(get_permalink($post_ID))),
+            1 =>  sprintf(__('Project updated. <a href="%s">View project</a>', 'wp-hackerspace'), esc_url(get_permalink($post_id))),
             2 => __('Custom field updated.', 'wp-hackerspace'),
             5 =>  isset($_GET['revision']) ? sprintf(__('Project restored to revision from %s', 'wp-hackerspace'), wp_post_revision_title((int)$_GET['revision'], false)) : false,
-            6 =>  sprintf(__('Project published. <a href="%s">View project</a>', 'wp-hackerspace'), esc_url(get_permalink($post_ID))),
+            6 =>  sprintf(__('Project published. <a href="%s">View project</a>', 'wp-hackerspace'), esc_url(get_permalink($post_id))),
             7 =>  __('Project saved.', 'wp-hackerspace'),
-            8 =>  sprintf(__('Project submitted. <a target="_blank" href="%s">Preview project</a>', 'wp-hackerspace'), esc_url(add_query_arg('preview', 'true', get_permalink($post_ID)))),
-            9 =>  sprintf(__('Project scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview project</a>', 'wp-hackerspace'), date_i18n(__('M j, Y @ G:i'), strtotime($post->post_date)), esc_url(get_permalink($post_ID))),
-            10 => sprintf(__('Project draft updated. <a target="_blank" href="%s">Preview project</a>', 'wp-hackerspace'), esc_url(add_query_arg('preview', 'true', get_permalink($post_ID)))),
+            8 =>  sprintf(__('Project submitted. <a target="_blank" href="%s">Preview project</a>', 'wp-hackerspace'), esc_url(add_query_arg('preview', 'true', get_permalink($post_id)))),
+            9 =>  sprintf(__('Project scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview project</a>', 'wp-hackerspace'), date_i18n(__('M j, Y @ G:i'), strtotime($post_date)), esc_url(get_permalink($post_id))),
+            10 => sprintf(__('Project draft updated. <a target="_blank" href="%s">Preview project</a>', 'wp-hackerspace'), esc_url(add_query_arg('preview', 'true', get_permalink($post_id)))),
         );
 
         return $messages;
@@ -107,8 +108,8 @@ class Post_Type_Project
     /**
      * Hide by default author, slug and revisions meta boxes for project post types
      *
-     * @param  array     $hidden Hidden meta boxes
-     * @param  WP_Screen $screen WP_Screen object
+     * @param array     $hidden Hidden meta boxes
+     * @param WP_Screen $screen WP_Screen object
      *
      * @return array     $hidden
      */
