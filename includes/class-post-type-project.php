@@ -17,6 +17,8 @@ class Post_Type_Project
         add_action('save_post', array( $this, 'save_project_fields'));
         // set up default hidden meta boxes
         add_filter('default_hidden_meta_boxes', array($this, 'hide_meta_boxes'), 10, 2);
+        // set the messages who appears on update
+        add_filter('post_updated_messages', array($this, 'post_updated_messages'));
     }
 
     /**
@@ -121,10 +123,30 @@ class Post_Type_Project
         update_post_meta($post_id, '_project_repository_url', $repository_url);
     }
 
-    ///** Update various user messages*/
-    //public function post_updated_messages()
-    //{
-    //}
+    /**
+     * Set the messages who appears on update
+     *
+     * @param  array $messages Default messages
+     *
+     * @return array $messages Messages for the Project post type
+     */
+    public function post_updated_messages($messages)
+    {
+        global $post, $post_ID;
+
+        $messages['hackerspace_project'] = array(
+            1 =>  sprintf(__('Project updated. <a href="%s">View project</a>', 'wp-hackerspace'), esc_url(get_permalink($post_ID))),
+            2 => __('Custom field updated.', 'wp-hackerspace'),
+            5 =>  isset($_GET['revision']) ? sprintf(__('Project restored to revision from %s', 'wp-hackerspace'), wp_post_revision_title((int)$_GET['revision'], false)) : false,
+            6 =>  sprintf(__('Project published. <a href="%s">View project</a>', 'wp-hackerspace'), esc_url(get_permalink($post_ID))),
+            7 =>  __('Project saved.', 'wp-hackerspace'),
+            8 =>  sprintf(__('Project submitted. <a target="_blank" href="%s">Preview project</a>', 'wp-hackerspace'), esc_url(add_query_arg('preview', 'true', get_permalink($post_ID)))),
+            9 =>  sprintf(__('Project scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview project</a>', 'wp-hackerspace'), date_i18n(__('M j, Y @ G:i'), strtotime($post->post_date)), esc_url(get_permalink($post_ID))),
+            10 => sprintf(__('Project draft updated. <a target="_blank" href="%s">Preview project</a>', 'wp-hackerspace'), esc_url(add_query_arg('preview', 'true', get_permalink($post_ID)))),
+        );
+
+        return $messages;
+    }
 
     /** Register the custom post type for Projects */
     public function register_project_post_type()
