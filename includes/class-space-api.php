@@ -93,7 +93,20 @@ class Space_Api
         // Add the default Wordpress Blog rss2 feed
         $spaceapi->feeds->blog->type = 'rss';
         $spaceapi->feeds->blog->url = get_bloginfo('rss2_url');
-        // TODO add projects list from project post type
+        // add projects list permalinks from Project post type
+        $projects_query = new WP_Query(array(
+            'post_type' => 'hackerspace_project',
+            'status'    => 'publish',
+            'nopaging'  => true,
+        ));
+        if ($projects_query->have_posts()) {
+            $spaceapi->projects = array();
+            while ($projects_query->have_posts()) {
+                $projects_query->the_post();
+                $spaceapi->projects[] = get_permalink();
+            }
+        }
+
         return $spaceapi;
     }
 
