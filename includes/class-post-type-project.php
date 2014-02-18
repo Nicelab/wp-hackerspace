@@ -11,10 +11,31 @@ class Post_Type_Project
     /** Constructor for the Post_Type_Project class */
     public function __construct()
     {
-        // register the project meta boxes
-        add_action('add_meta_boxes', array($this, 'register_project_meta_boxes'));
+        // register the project meta boxe
+        add_action('add_meta_boxes', array($this, 'register_project_meta_box'));
         // add a save callback for saving additional fields
-        add_action('save_post', array( $this, 'save_meta_boxes'));
+        add_action('save_post', array( $this, 'save_project_fields'));
+        // set up default hidden meta boxes
+        add_filter('default_hidden_meta_boxes', array($this, 'hide_meta_boxes'), 10, 2);
+    }
+
+    /**
+     * Hide by default author, slug and revisions meta boxes for projects
+     *
+     * @param  array     $hidden Hidden meta boxes
+     * @param  WP_Screen $screen WP_Screen object
+     *
+     * @return array     $hidden
+     */
+
+    public function hide_meta_boxes($hidden, $screen)
+    {
+        $screen_id = $screen->id;
+        if ($screen_id == 'hackerspace_project') {
+            $hidden = array('revisionsdiv','slugdiv','authordiv');
+        }
+
+        return $hidden;
     }
 
     /**
@@ -32,43 +53,50 @@ class Post_Type_Project
         return $help_tab;
     }
 
-    /** Register meta boxes for the Project custom post type */
-    public function register_project_meta_boxes()
+    /** Register the meta box used for the projects additional fields */
+    public function register_project_meta_box()
     {
         add_meta_box(
             'project_repository_url',
-            __('Repository url', 'wp-hackerspace'),
-            array($this, 'render_repository_url_meta_box'),
+            __('Additional informations', 'wp-hackerspace'),
+            array($this, 'render_project_fields'),
             'hackerspace_project',
             'normal',
             'high'
             );
     }
 
-//TODO all additional fields in one box
-//Additional fields : author / person to contact / status / license /
 //TODO add a template page to display addictional fields
 
     /**
-     * Render the repository url field
+     * Render the project additional fields in the meta box
      *
-     * @param WP_Post $post WordPress post object.
+     * @param WP_Post $post WordPress post object
      */
-    public function render_repository_url_meta_box($post)
+    public function render_project_fields($post)
     {
-        $value = get_post_meta($post->ID, '_project_repository_url', true);
+        $status = get_post_meta($post->ID, '_project_status', true);
+        $contact = get_post_meta($post->ID, '_project_contact', true);
+        $repository_url = get_post_meta($post->ID, '_project_repository_url', true);
         wp_nonce_field('project_repository_url_meta_box', 'project_repository_url_meta_box_nonce');
-        //echo '';
-        echo '<input type="url" name="project_repository_url" value="'.esc_attr($value).'" class="regular-text code" />';
-        echo '<p class="description">'.__('URL of the code source repository.', 'wp-hackerspace').'</p>';
+        echo '<fieldset><legend><strong>'.__('Status', 'wp-hackerspace').'</strong></legend>';
+        echo '<input type="text" name="project_status" value="'.esc_attr($status).'" class="regular-text" />';
+        echo '&nbsp;<span class="description">'.__('The progress status of the project.', 'wp-hackerspace').'</fieldset></br>';
+        echo '<fieldset><legend><strong>'.__('Contact person', 'wp-hackerspace').'</strong></legend>';
+        echo '<input type="text" name="project_contact" value="'.esc_attr($contact).'" class="regular-text" />';
+        echo '&nbsp;<span class="description">'.__('The person to contact.', 'wp-hackerspace').'</fieldset></br>';
+        echo '<fieldset><legend><strong>'.__('Repository address', 'wp-hackerspace').'</strong></legend>';
+        echo '<input type="url" name="project_repository_url" value="'.esc_attr($repository_url).'" class="regular-text code" />';
+        echo '&nbsp;<span class="description">'.__('URL of the source code repository.', 'wp-hackerspace').'</fieldset>';
+        // TODO add license field ?
     }
 
     /**
      * Save the post meta fields in the WordPress database
      *
-     * @param int $post_id ID of the WordPress post.
+     * @param int $post_id ID of the WordPress post
      */
-    public function save_meta_boxes($post_id)
+    public function save_project_fields($post_id)
     {
         // Check the nonce is set
         if (! isset($_POST['project_repository_url_meta_box_nonce'])) {
@@ -84,8 +112,12 @@ class Post_Type_Project
         }
         // TODO add user rights checks
         // Sanitize inputs
+        $status = sanitize_text_field($_POST['project_status']);
+        $contact = sanitize_text_field($_POST['project_contact']);
         $repository_url = sanitize_text_field($_POST['project_repository_url']);
-        // Update the field
+        // Update the fields
+        update_post_meta($post_id, '_project_status', $status);
+        update_post_meta($post_id, '_project_contact', $contact);
         update_post_meta($post_id, '_project_repository_url', $repository_url);
     }
 
@@ -120,7 +152,9 @@ class Post_Type_Project
             'supports'           => array(
                 'title',
                 'editor',
+                'author',
                 'thumbnail',
+                'excerpt',
                 'revisions',
             ),
             'taxonomies'         => array(
