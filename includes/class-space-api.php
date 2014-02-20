@@ -16,7 +16,7 @@ class Space_Api
     const API_VERSION = '0.13';
 
     /**
-     * Create the default (empty) spaceapi object for use with plugin settings forms
+     * Create the default Space Api values
      *
      * @return stdClass object
      */

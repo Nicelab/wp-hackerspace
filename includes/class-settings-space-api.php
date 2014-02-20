@@ -10,10 +10,8 @@ class Settings_Space_Api
     /** Constructor for the Settings_Features class */
     public function __construct()
     {
-        // TODO move this in activate ?
-        // create default values for options on first install
+        // set default values for options on first install
         if (false == get_option('hackerspace_spaceapi')) {
-            // TODO move default values here ?
             $Space_Api = new Space_Api();
             add_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
         }
@@ -108,7 +106,7 @@ class Settings_Space_Api
     /** Render the other section description text */
     public function other_section()
     {
-        // TODO add description text
+        _e('Other various settings.', 'wp-hackerspace');
     }
 
     /** Render the Space Api version field (read only) */
@@ -233,7 +231,7 @@ class Settings_Space_Api
     /** Render the issue report channel field (read only)*/
     public function issue_report_channel_field()
     {
-        // TODO issue report chanel is readonly and set up to 'email' for now, we need change this to combo boxes in future versions
+        // TODO issue report chanel is readonly and set up to 'email' for now, we need change this to checkboxes in future versions
         echo '<input type="text" name="hackerspace_spaceapi[issue_report_channels][0]" value="'.esc_attr($this->options->issue_report_channels[0]).'" class="regular-text" readonly />';
         echo '<p class="description">'.__('Communication channels where you want to get automated issue reports about your SpaceAPI endpoint from the validator.', 'wp-hackerspace').'</p>';
     }
