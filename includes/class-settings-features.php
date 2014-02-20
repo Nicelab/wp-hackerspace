@@ -55,7 +55,7 @@ class Settings_Features
     {
         // convert inputed array options to a stdClass object
         $output = json_decode(json_encode($input));
-        // validation
+        // sanitization (checkboxes drop false values or set them to '1' instead of true)
         if (! isset($output->projects_enabled)) {
             $output->projects_enabled = false;
         } else if ($output->projects_enabled == '1') {

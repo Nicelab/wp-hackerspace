@@ -65,7 +65,6 @@ class Settings_Space_Api
         // sanitization
         $output->location->lat = (float)$output->location->lat; // html form have saved this as text instead off numbers
         $output->location->lon = (float)$output->location->lon;
-        // TODO add validation
 
         return $output;
     }

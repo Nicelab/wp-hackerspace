@@ -12,8 +12,6 @@
  * Domain Path: /languages
  */
 
-// TODO add an update mecanism
-
 
 // include the required external classes files
 require_once(plugin_dir_path(__FILE__).'includes/class-post-type-project.php');
@@ -92,7 +90,7 @@ class Hackerspace
     /** Uninstall the plugin */
     public static function uninstall()
     {
-        delete_option('hackerspace_features');  //TODO test this
+        delete_option('hackerspace_features');
         delete_option('hackerspace_spaceapi');
     }
 

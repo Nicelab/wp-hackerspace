@@ -8,7 +8,7 @@
 class Post_Type_Project
 {
 
-//TODO add a template page to display additional fields
+    //TODO add a template page to display additional fields
 
     /** Constructor for the Post_Type_Project class */
     public function __construct()
@@ -45,7 +45,7 @@ class Post_Type_Project
             'public'             => true,
             'menu_position'      => 21,
             'menu_icon'          => 'dashicons-hammer',
-            //'capabilities' // TODO add user rights
+            //'capabilities'
             //TODO archive parameter ?
             'supports'           => array(
                 'title',
@@ -158,7 +158,6 @@ class Post_Type_Project
         echo '<fieldset><legend><strong>'.__('Repository address', 'wp-hackerspace').'</strong></legend>';
         echo '<input type="url" name="project_repository_url" value="'.esc_attr($repository_url).'" class="regular-text code" />';
         echo '&nbsp;<span class="description">'.__('URL of the source code repository.', 'wp-hackerspace').'</fieldset>';
-        // TODO add license field ?
     }
 
     /**
@@ -180,7 +179,6 @@ class Post_Type_Project
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return $post_id;
         }
-        // TODO add user rights checks
         // Sanitize inputs
         $status = sanitize_text_field($_POST['project_status']);
         $contact = sanitize_text_field($_POST['project_contact']);

@@ -19,7 +19,6 @@ class Space_State
      */
     public function is_open()
     {
-        //TODO add more external sources and allow user to choice the source from settings
         if (is_plugin_active('wp-opening-hours/wp-opening-hours.php')) {
             return $this->get_opening_hours_state();
         }

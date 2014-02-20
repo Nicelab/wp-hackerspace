@@ -1,10 +1,24 @@
 TODO
 ====
 
-* Try to create a Page instead of a feed for Space Api json output
-  -> This would allow the recomended /status.json address
+General
+-------
 
-* Follow PSR-0 coding practice
-  -> Use namespace, autoloader, etc...
+- Add an update feature for the plugin
+- Work on activation/deactivation
+- Test uninstall
 
-* Use the WordPress Media feature for logo, open, close images
+Spaceapi endpoint
+-----------------
+
+- Try to create a Page instead of a feed for Space Api json output
+    This would allow the recomended /status.json address
+- Add more external sources for the open/close status and allow user to choice the source from settings
+- Use the WordPress Media feature for logo, open, close images
+- Add more  infos like spacefeed, cam & sensors
+
+
+Custom post types
+-----------------
+
+- add an 'hacker' user dedicated to our custom post types

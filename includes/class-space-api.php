@@ -11,8 +11,6 @@
 class Space_Api
 {
 
-    // TODO add spacefeed, cam, sensors->total members, projects
-
     const API_VERSION = '0.13';
 
     /**
@@ -87,7 +85,6 @@ class Space_Api
             unset($spaceapi->contact->jabber);
         }
 
-        // TODO use Opening Hours plugin values
         // Add the open/close status
         $Space_State = new Space_State();
         //$spaceapi->state->open = null;
