@@ -10,14 +10,38 @@ class Settings_Features
     /** Constructor for the Settings_Features class */
     public function __construct()
     {
-        // TODO create default values for options
+        // set default values for options on first install
+        if (false == get_option('hackerspace_features')) {
+            add_option('hackerspace_features', $this->set_default_features());
+        }
+
         $this->options = get_option('hackerspace_features');
+    }
+
+    /**
+     * Create the default features options
+     *
+     * @return stdClass object
+     */
+    public function set_default_features()
+    {
+        $features = new stdClass;
+        $features->projects_enabled = true;
+        $features->spaceapi_enabled = true;
+
+        return $features;
     }
 
     /** Whitelist the features settings */
     public function register_settings()
     {
         register_setting('hackerspace_features', 'hackerspace_features', array($this, 'settings_validate'));
+
+        add_settings_section('features_section', null, array($this, 'features_section'), 'hackerspace_features');
+
+        add_settings_field('projects_enabled', __('Projects', 'wp-hackerspace'), array($this, 'projects_field'), 'hackerspace_features', 'features_section');
+        add_settings_field('spaceapi_enabled', __('Space Api', 'wp-hackerspace'), array($this, 'spaceapi_field'), 'hackerspace_features', 'features_section');
+
     }
 
     /**
@@ -31,8 +55,17 @@ class Settings_Features
     {
         // convert inputed array options to a stdClass object
         $output = json_decode(json_encode($input));
-        // sanitization
-        // TODO add validation
+        // validation
+        if (! isset($output->projects_enabled)) {
+            $output->projects_enabled = false;
+        } else if ($output->projects_enabled == '1') {
+            $output->projects_enabled = true;
+        }
+        if (! isset($output->spaceapi_enabled)) {
+            $output->spaceapi_enabled = false;
+        } else if ($output->spaceapi_enabled == '1') {
+            $output->spaceapi_enabled = true;
+        }
 
         return $output;
     }
@@ -52,10 +85,24 @@ class Settings_Features
         return $help_tab;
     }
 
-    /** Render the main section description text */
-    public function main_section()
+    /** Render the features section description text */
+    public function features_section()
     {
-        //TODO add description text
     }
+
+    /** Render the Project custom post type feature field */
+    public function projects_field()
+    {
+        echo '<input type="checkbox" name="hackerspace_features[projects_enabled]" value="1"'.checked(1, $this->options->projects_enabled, false).'" />';
+        echo '<span class="description">'.__('Enable the custom post type for projects.', 'wp-hackerspace');
+    }
+
+    /** Render the Space Api feature field */
+    public function spaceapi_field()
+    {
+        echo '<input type="checkbox" name="hackerspace_features[spaceapi_enabled]" value="1"'.checked(1, $this->options->spaceapi_enabled, false).'" />';
+        echo '<span class="description">'.__('Enable the Space Api Json endpoint.', 'wp-hackerspace');
+    }
+
 
 }
