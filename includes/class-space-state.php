@@ -1,5 +1,8 @@
 <?php
 
+// allow to use `is_plugin_active` function
+include_once(ABSPATH.'wp-admin/includes/plugin.php');
+
 /**
  * Get the Space Open/Close state from external sources
  *
@@ -9,12 +12,17 @@
  */
 class Space_State
 {
-
+    /**
+     *  Retrive the opening state of the hackerspace
+     *
+     * @retun boll The open/close state
+     */
     public function is_open()
     {
-        //TODO add cases based on external sources
-        //TODO add enabled/available Opening Hours plugin check
-        return $this->get_opening_hours_state();
+        //TODO add more external sources and allow user to choice the source from settings
+        if (is_plugin_active('wp-opening-hours/wp-opening-hours.php')) {
+            return $this->get_opening_hours_state();
+        }
     }
 
     /**
@@ -24,7 +32,7 @@ class Space_State
      */
     private function get_opening_hours_state()
     {
-        if (function_exists('is_open')){
+        if (function_exists('is_open')){ // plugin version 1.2
             return is_open();
         }
         else {
