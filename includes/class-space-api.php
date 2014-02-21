@@ -112,7 +112,6 @@ class Space_Api
     /** Render json encoded Space Api infos */
     public function spaceapi_json()
     {
-        // TODO add exception if UTF-8 encoding error
         header('Access-Control-Allow-Origin: *');
         header('Content-Type: application/json');
         header('Cache-Control: no-cache');

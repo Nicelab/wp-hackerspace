@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Uninstall the plugin
  *
@@ -7,6 +6,8 @@
  *
  * @since 0.3
  */
+
+/** Uninstall the plugin */
 function hackerspace_uninstall()
 {
     // security checks

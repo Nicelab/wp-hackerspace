@@ -17,6 +17,7 @@ Spaceapi endpoint
 - Add more external sources for the open/close status and allow user to choice the source from settings
 - Use the WordPress Media feature for logo, open, close images
 - Add more  infos like spacefeed, cam & sensors
+- Enable settings for issue report chanel and cache time
 
 
 Custom post types

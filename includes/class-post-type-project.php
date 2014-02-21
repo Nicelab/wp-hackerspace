@@ -82,10 +82,14 @@ class Post_Type_Project
         ));
     }
 
-    /** Give capabilities on the project post type to 'hackers', 'administrators' and 'editors' */
-    public function set_capabilities($role_name)
+    /**
+     * Give capabilities on the project post type to 'hackers', 'administrators' and 'editors'
+     *
+     * @param string $role Name of the role
+     */
+    public function set_capabilities($role)
     {
-        $role = get_role($role_name);
+        $role = get_role($role);
         // full capabilities
         if ($role->name == 'administrator' || $role->name == 'editor') {
             $role->add_cap('edit_hackerspace_projects');
@@ -115,10 +119,14 @@ class Post_Type_Project
         }
     }
 
-    /** Remove all capabilities on the Project poct type for a role */
-    public function remove_capabilities($role_name)
+    /**
+     * Remove all capabilities on the Project post type for a role
+     *
+     * @param string $role Name of the role
+     */
+    public function remove_capabilities($role)
     {
-        $role = get_role($role_name);
+        $role = get_role($role);
         $role->remove_cap('edit_hackerspace_projects');
         $role->remove_cap('read_hackerspace_project');
         $role->remove_cap('delete_hackerspace_project');

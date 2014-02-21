@@ -230,7 +230,6 @@ class Settings_Space_Api
     /** Render the issue report channel field (read only)*/
     public function issue_report_channel_field()
     {
-        // TODO issue report chanel is readonly and set up to 'email' for now, we need change this to checkboxes in future versions
         echo '<input type="text" name="hackerspace_spaceapi[issue_report_channels][0]" value="'.esc_attr($this->options->issue_report_channels[0]).'" class="regular-text" readonly />';
         echo '<p class="description">'.__('Communication channels where you want to get automated issue reports about your SpaceAPI endpoint from the validator.', 'wp-hackerspace').'</p>';
     }
@@ -238,7 +237,6 @@ class Settings_Space_Api
     /** Render the cache schedule field (read only) */
     public function cache_schedule_field() //read only field
     {
-        // TODO the cache setting is fixed to 5 minutes for now, we need to change this to a dropdow list
         echo '<input type="text" name="hackerspace_spaceapi[cache][schedule]" value="'.esc_attr($this->options->cache->schedule).'" class="regular-text" readonly />';
         echo '<p class="description">'.__('Cache update cycle of your SpaceAPI endpoint.', 'wp-hackerspace').'</p>';
     }
