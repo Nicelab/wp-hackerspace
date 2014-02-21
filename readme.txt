@@ -1,9 +1,9 @@
-=== hackerspace ===
+=== Hackerspace ===
 Contributors: Nicelab
 Donate link:
 Tags: hackerspace, spaceapi, json, wiki
 Requires at least: 3.8
-Tested up to: 3.8 License
+Tested up to: 3.8.1
 Stable tag:
 License: Expat/MIT
 License URI: http://directory.fsf.org/wiki/License:Expat
