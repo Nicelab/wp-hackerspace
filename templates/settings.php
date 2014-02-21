@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Hackerspace
+ * Template for the admin settings page
  */
 
 // get the active settings tab, default to 'features'
