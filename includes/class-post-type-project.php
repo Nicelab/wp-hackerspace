@@ -9,6 +9,7 @@ class Post_Type_Project
 {
 
     //TODO add a template page to display additional fields
+    //TODO use arrays for capabities + foreach to shorten the code
 
     /** Constructor for the Post_Type_Project class */
     public function __construct()
@@ -79,6 +80,58 @@ class Post_Type_Project
                 'slug'               => __('projects', 'wp-hackerspace'),
             ),
         ));
+    }
+
+    /** Give capabilities on the project post type to 'hackers', 'administrators' and 'editors' */
+    public function set_capabilities($role_name)
+    {
+        $role = get_role($role_name);
+        // full capabilities
+        if ($role->name == 'administrator' || $role->name == 'editor') {
+            $role->add_cap('edit_hackerspace_projects');
+            $role->add_cap('read_hackerspace_project');
+            $role->add_cap('delete_hackerspace_project');
+            $role->add_cap('edit_hackerspace_project');
+            $role->add_cap('edit_others_hackerspace_project');
+            $role->add_cap('publish_hackerspace_project');
+            $role->add_cap('read_private_hackerspace_project');
+            $role->add_cap('delete_hackerspace_project');
+            $role->add_cap('delete_private_hackerspace_project');
+            $role->add_cap('delete_published_hackerspace_project');
+            $role->add_cap('delete_others_hackerspace_project');
+            $role->add_cap('edit_private_hackerspace_project');
+            $role->add_cap('edit_published_hackerspace_project');
+        } else {
+            $role->add_cap('edit_hackerspace_projects');
+            $role->add_cap('read_hackerspace_project');
+            $role->add_cap('delete_hackerspace_project');
+            $role->add_cap('edit_hackerspace_project');
+            $role->add_cap('publish_hackerspace_project');
+            $role->add_cap('read_private_hackerspace_project');
+            $role->add_cap('delete_hackerspace_project');
+            $role->add_cap('delete_published_hackerspace_project');
+            $role->add_cap('edit_private_hackerspace_project');
+            $role->add_cap('edit_published_hackerspace_project');
+        }
+    }
+
+    /** Remove all capabilities on the Project poct type for a role */
+    public function remove_capabilities($role_name)
+    {
+        $role = get_role($role_name);
+        $role->remove_cap('edit_hackerspace_projects');
+        $role->remove_cap('read_hackerspace_project');
+        $role->remove_cap('delete_hackerspace_project');
+        $role->remove_cap('edit_hackerspace_project');
+        $role->remove_cap('edit_others_hackerspace_project');
+        $role->remove_cap('publish_hackerspace_project');
+        $role->remove_cap('read_private_hackerspace_project');
+        $role->remove_cap('delete_hackerspace_project');
+        $role->remove_cap('delete_private_hackerspace_project');
+        $role->remove_cap('delete_published_hackerspace_project');
+        $role->remove_cap('delete_others_hackerspace_project');
+        $role->remove_cap('edit_private_hackerspace_project');
+        $role->remove_cap('edit_published_hackerspace_project');
     }
 
     /**

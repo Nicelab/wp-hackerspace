@@ -8,15 +8,16 @@
 class Plugin_Setup
 {
 
-//    /** Constructor for the Plugin_Update class */
-//    public function __construct()
-//    {
+    /** Constructor for the Plugin_Setup class */
+    public function __construct()
+    {
+        // TODO if old version -> update+activate else activate
 //        // check if hackerspace_version is in the database
 //        if (true == get_option('hackerspace_version')) {
 //            $ version =
 //            add_option('hackerspace_features', $this->set_default_features());
 //        }
-//    }
+    }
 
     /** Activate the plugin */
     public function activate()
@@ -26,21 +27,24 @@ class Plugin_Setup
             return;
         }
         // enable the 'hacker' role
-        //require_once(plugin_dir_path(__FILE__).'includes/class-role-hacker.php');
-        //$Role_Hacker = new Role_Hacker;
-        //$Role_Hacker->add_hacker_role();
-
+        self::add_hacker_role();
+        // set capabilities
+        self::set_capabilities();
         // flush rewrite rules for custom post types permalinks
         flush_rewrite_rules();
     }
 
     /** Deactivate the plugin */
-    public static function deactivate()
+    public function deactivate()
     {
         // check if the user have the right to do this
         if (! current_user_can('activate_plugins')) {
             return;
         }
+        // remove the 'hacker' role
+        self::remove_hacker_role();
+        // remove capabilities
+        self::remove_capabilities();
         // flush rewrite rules for custom post types permalinks
         flush_rewrite_rules();
     }
@@ -50,6 +54,52 @@ class Plugin_Setup
     {
     }
 
+    /**
+     * Add and 'hacker' role with 'contributor' role capabilities
+     *
+     * This role can
+     * - create blog post but not publish them
+     * - create, edit, publish and delete his own custom post types (see in class-post-type files)
+     * - read the privates custom post types
+     * This role cannot
+     * - manage the settings of the plugin
+     * - edit and delete the custom post type from others
+     */
+    private function add_hacker_role()
+    {
+        $contributor = get_role('contributor');
+        if (!get_role('hacker')) {
+            add_role(
+                'hacker',
+                __('Hacker', 'wp-hackerspace'),
+                $contributor->capabilities
+            );
+        }
+    }
 
+    /** remove the 'hacker' role */
+    private function remove_hacker_role()
+    {
+        remove_role('hacker');
+    }
+
+    //** Set capabilities on custom post type */
+    private function set_capabilities()
+    {
+        // limited cababilities for 'hacker' role
+        // full capabilities for 'adminstrator' and 'editor' roles
+        Post_Type_Project::set_capabilities('administrator');
+        Post_Type_Project::set_capabilities('editor');
+        Post_Type_Project::set_capabilities('hacker');
+    }
+
+    //** Remove capabilities on custom post type */
+    private function remove_capabilities()
+    {
+        // remove capabilities for 'adminstrator' and 'editor' roles
+        Post_Type_Project::remove_capabilities('administrator');
+        Post_Type_Project::remove_capabilities('editor');
+    }
 
 }
+
