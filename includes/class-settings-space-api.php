@@ -13,7 +13,7 @@ class Settings_Space_Api
         // set default values for options on first install
         if (false == get_option('hackerspace_spaceapi')) {
             $Space_Api = new Space_Api();
-            add_option('hackerspace_spaceapi', $SpaceApi->set_default_spaceapi());
+            add_option('hackerspace_spaceapi', $Space_Api->set_default_spaceapi());
         }
 
         $this->options = get_option('hackerspace_spaceapi');
