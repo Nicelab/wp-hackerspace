@@ -14,10 +14,11 @@
 
 
 // include the required external classes files
-require_once(plugin_dir_path(__FILE__).'includes/class-post-type-project.php');
+require_once(plugin_dir_path(__FILE__).'includes/class-plugin-setup.php');
+require_once(plugin_dir_path(__FILE__).'includes/class-space-api.php');
 require_once(plugin_dir_path(__FILE__).'includes/class-settings-features.php');
 require_once(plugin_dir_path(__FILE__).'includes/class-settings-space-api.php');
-require_once(plugin_dir_path(__FILE__).'includes/class-space-api.php');
+require_once(plugin_dir_path(__FILE__).'includes/class-post-type-project.php');
 require_once(plugin_dir_path(__FILE__).'includes/class-space-state.php');
 
 
@@ -28,6 +29,9 @@ require_once(plugin_dir_path(__FILE__).'includes/class-space-state.php');
  */
 class Hackerspace
 {
+
+    const PLUGIN_VERSION = '0.3';
+
     /**
      * Constructor for the Hackerspace class
      *
@@ -35,9 +39,9 @@ class Hackerspace
      */
     public function __construct()
     {
-        // register activation, deactivation and uninstall hooks for the plugin
-        register_activation_hook(__FILE__, array($this, 'activate'));
-        register_deactivation_hook(__FILE__, array($this, 'deactivate'));
+        // register activation and deactivation hooks for the plugin
+        register_activation_hook(__FILE__, array('Plugin_Setup', 'activate'));
+        register_deactivation_hook(__FILE__, array('Plugin_Setup', 'deactivate'));
 
         // load translations
         load_plugin_textdomain('wp-hackerspace', false, plugin_dir_path(__FILE__).'/languages');
@@ -72,28 +76,6 @@ class Hackerspace
         $this->Settings_Features = new Settings_Features();
         $this->Settings_Space_Api = new Settings_Space_Api();
         $this->Space_Api = new Space_Api();
-    }
-
-    /** Activate the plugin */
-    public static function activate()
-    {
-        // check if the user have the right to do this
-        if (! current_user_can('activate_plugins')) {
-            return;
-        }
-        // flush rewrite rules for custom post types permalinks
-        flush_rewrite_rules();
-    }
-
-    /** Deactivate the plugin */
-    public static function deactivate()
-    {
-        // check if the user have the right to do this
-        if (! current_user_can('activate_plugins')) {
-            return;
-        }
-        // flush rewrite rules for custom post types permalinks
-        flush_rewrite_rules();
     }
 
     /** Register the plugin settings */
