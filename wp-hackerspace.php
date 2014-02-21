@@ -38,7 +38,6 @@ class Hackerspace
         // register activation, deactivation and uninstall hooks for the plugin
         register_activation_hook(__FILE__, array($this, 'activate'));
         register_deactivation_hook(__FILE__, array($this, 'deactivate'));
-        register_uninstall_hook(__FILE__, array('Hackerspace', 'uninstall'));
 
         // load translations
         load_plugin_textdomain('wp-hackerspace', false, plugin_dir_path(__FILE__).'/languages');
@@ -78,6 +77,10 @@ class Hackerspace
     /** Activate the plugin */
     public static function activate()
     {
+        // check if the user have the right to do this
+        if (! current_user_can('activate_plugins')) {
+            return;
+        }
         // flush rewrite rules for custom post types permalinks
         flush_rewrite_rules();
     }
@@ -85,13 +88,12 @@ class Hackerspace
     /** Deactivate the plugin */
     public static function deactivate()
     {
-    }
-
-    /** Uninstall the plugin */
-    public static function uninstall()
-    {
-        delete_option('hackerspace_features');
-        delete_option('hackerspace_spaceapi');
+        // check if the user have the right to do this
+        if (! current_user_can('activate_plugins')) {
+            return;
+        }
+        // flush rewrite rules for custom post types permalinks
+        flush_rewrite_rules();
     }
 
     /** Register the plugin settings */
