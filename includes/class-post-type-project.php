@@ -46,7 +46,6 @@ class Post_Type_Project
             'menu_position'      => 21,
             'menu_icon'          => 'dashicons-hammer',
             //'capabilities'
-            //TODO archive parameter ?
             'supports'           => array(
                 'title',
                 'editor',
@@ -59,8 +58,9 @@ class Post_Type_Project
                 'category',
                 'post_tag',
             ),
+            'has_archive'         => true,
             'rewrite'            => array(
-                'slug'               => __('project', 'wp-hackerspace'), // hesitating between 'project' and 'projects'
+                'slug'               => __('projects', 'wp-hackerspace'),
             ),
         ));
     }
