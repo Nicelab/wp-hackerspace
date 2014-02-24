@@ -87,7 +87,6 @@ class Space_Api
 
         // Add the open/close status
         $Space_State = new Space_State();
-        //$spaceapi->state->open = null;
         $spaceapi->state->open = $Space_State->is_open();
         // Add the default Wordpress Blog rss2 feed
         $spaceapi->feeds->blog->type = 'rss';
