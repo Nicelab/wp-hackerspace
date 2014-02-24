@@ -8,17 +8,6 @@
 class Plugin_Setup
 {
 
-    /** Constructor for the Plugin_Setup class */
-    public function __construct()
-    {
-        // TODO if old version -> update+activate else activate
-//        // check if hackerspace_version is in the database
-//        if (true == get_option('hackerspace_version')) {
-//            $ version =
-//            add_option('hackerspace_features', $this->set_default_features());
-//        }
-    }
-
     /** Activate the plugin */
     public function activate()
     {
@@ -54,7 +43,7 @@ class Plugin_Setup
      *
      * @return text $plugin_version version number from the options
      */
-    public function plugin_version()
+    private function plugin_version()
     {
         // if no version exist, we assume then it's first install an set the current version
         if (false == get_option('hackerspace_version')) {
