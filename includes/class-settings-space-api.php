@@ -159,7 +159,6 @@ class Settings_Space_Api
     /** Render the Space email field */
     public function email_field()
     {
-        // TODO email is required for now, because of issue_report_channels_field is set up to default to this value
         echo '<input type="email" name="hackerspace_spaceapi[contact][email]" value="'.esc_attr($this->options->contact->email).'" class="regular-text ltr" required="required" />';
         echo '<p class="description">'.__('E-mail address for contacting your space.', 'wp-hackerspace').'</p>';
     }

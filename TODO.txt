@@ -9,6 +9,7 @@ General
 - Test uninstall
 - Write a better way for uninstall : ask the user to remove, or not, custom post type, hackerspace user and settings
 
+
 Spaceapi endpoint
 -----------------
 
@@ -17,8 +18,14 @@ Spaceapi endpoint
 - Add more external sources for the open/close status and allow user to choice the source from settings
 - Use the WordPress Media feature for logo, open, close images
 - Add more  infos like spacefeed, cam & sensors
-- Enable settings for issue report chanel and cache time
 
+
+Settings admin page
+-------------------
+
+- Improve validation (html5 only for now)
+- Enable settings for Space Api issue report chanels and cache time
+- Replace the requirement to email to a proper validation comining issue report chanels and contacts fields
 
 Custom post types
 -----------------
