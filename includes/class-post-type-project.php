@@ -21,7 +21,7 @@ class Post_Type_Project
         // register the project meta box for additional fields
         add_action('add_meta_boxes', array($this, 'register_project_meta_box'));
         // add a save callback for saving additional fields
-        add_action('save_post', array( $this, 'save_project_fields'));
+        add_action('save_post', array($this, 'save_project_fields'));
     }
 
     /** Register the custom post type for Projects */
