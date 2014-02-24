@@ -111,7 +111,7 @@ class Settings_Space_Api
     /** Render the Space Api version field (read only) */
     public function api_field()
     {
-        echo '<input type="text" name="hackerspace_spaceapi[api]" value="'.esc_attr($this->options->api).'" class="regular-text" readonly />';
+        echo '<input type="text" name="hackerspace_spaceapi[api]" value="'.esc_attr($this->options->api).'" class="regular-text" readonly style="width: 5em;" />';
     }
 
     /** Render the Space name field */
