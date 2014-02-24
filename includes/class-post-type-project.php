@@ -9,7 +9,6 @@ class Post_Type_Project
 {
 
     //TODO add a template page to display additional fields
-    //TODO use arrays for capabities + foreach to shorten the code
 
     /** Constructor for the Post_Type_Project class */
     public function __construct()
