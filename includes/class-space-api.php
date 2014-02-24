@@ -49,7 +49,7 @@ class Space_Api
      *
      * @return stdClass object
      */
-    public function get_spaceapi()
+    private function get_spaceapi()
     {
         // get infos from settings
         $spaceapi = get_option('hackerspace_spaceapi');
