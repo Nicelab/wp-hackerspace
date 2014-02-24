@@ -8,6 +8,13 @@
 class Plugin_Setup
 {
 
+    /** Constructor for the Hackerspace class */
+    public function __construct()
+    {
+        // instantiate the required external classes
+        $this->Post_Type_Project = new Post_Type_Project();
+    }
+
     /** Activate the plugin */
     public function activate()
     {
@@ -16,9 +23,9 @@ class Plugin_Setup
             return;
         }
         // enable the 'hacker' role
-        self::add_hacker_role();
+        $this->add_hacker_role();
         // set capabilities
-        self::set_capabilities();
+        $this->set_capabilities();
         // flush rewrite rules for custom post types permalinks
         flush_rewrite_rules();
     }
@@ -31,9 +38,9 @@ class Plugin_Setup
             return;
         }
         // remove the 'hacker' role
-        self::remove_hacker_role();
+        $this->remove_hacker_role();
         // remove capabilities
-        self::remove_capabilities();
+        $this->remove_capabilities();
         // flush rewrite rules for custom post types permalinks
         flush_rewrite_rules();
     }
@@ -58,7 +65,7 @@ class Plugin_Setup
     /** Update the plugin */
     public function update()
     {
-        $plugin_version = self::plugin_version();
+        $plugin_version = $this->plugin_version();
         switch($plugin_version) {
             case '0.3':
                 //placeholder for futures updates
@@ -100,17 +107,17 @@ class Plugin_Setup
     {
         // limited cababilities for 'hacker' role
         // full capabilities for 'adminstrator' and 'editor' roles
-        Post_Type_Project::set_capabilities('administrator');
-        Post_Type_Project::set_capabilities('editor');
-        Post_Type_Project::set_capabilities('hacker');
+        $this->Post_Type_Project->set_capabilities('administrator');
+        $this->Post_Type_Project->set_capabilities('editor');
+        $this->Post_Type_Project->set_capabilities('hacker');
     }
 
     /** Remove capabilities on custom post type */
     private function remove_capabilities()
     {
         // remove capabilities for 'adminstrator' and 'editor' roles
-        Post_Type_Project::remove_capabilities('administrator');
-        Post_Type_Project::remove_capabilities('editor');
+        $this->Post_Type_Project->remove_capabilities('administrator');
+        $this->Post_Type_Project->remove_capabilities('editor');
     }
 
 }

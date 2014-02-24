@@ -39,12 +39,18 @@ class Hackerspace
      */
     public function __construct()
     {
-        // register activation and deactivation hooks for the plugin
-        register_activation_hook(__FILE__, array('Plugin_Setup', 'activate'));
-        register_deactivation_hook(__FILE__, array('Plugin_Setup', 'deactivate'));
-        // enable the plugin updater
-        add_action('admin_init',  array('Plugin_Setup', 'update'));
+        // instantiate the required external classes
+        $this->Plugin_Setup = new Plugin_Setup();
+        $this->Post_Type_Project = new Post_Type_Project();
+        $this->Settings_Features = new Settings_Features();
+        $this->Settings_Space_Api = new Settings_Space_Api();
+        $this->Space_Api = new Space_Api();
 
+        // register activation, deactivation hooks for the plugin
+        register_activation_hook(__FILE__, array($this->Plugin_Setup, 'activate'));
+        register_deactivation_hook(__FILE__, array($this->Plugin_Setup, 'deactivate'));
+        // enable the plugin updater
+        add_action('admin_init',  array($this->Plugin_Setup, 'update'));
 
         // load translations
         load_plugin_textdomain('wp-hackerspace', false, plugin_dir_path(__FILE__).'/languages');
@@ -73,12 +79,6 @@ class Hackerspace
         // Temporary debug lines until an update mecanism if added. Uncomment to reset default values or missing ones after upgrade
         //$Space_Api = new Space_Api();
         //update_option('hackerspace_spaceapi', $Space_Api->set_default_spaceapi());
-
-        // instantiate the required external classes
-        $this->Post_Type_Project = new Post_Type_Project();
-        $this->Settings_Features = new Settings_Features();
-        $this->Settings_Space_Api = new Settings_Space_Api();
-        $this->Space_Api = new Space_Api();
     }
 
     /** Register the plugin settings */
