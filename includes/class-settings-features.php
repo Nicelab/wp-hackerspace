@@ -14,8 +14,9 @@ class Settings_Features
         if (false == get_option('hackerspace_features')) {
             add_option('hackerspace_features', $this->set_default_features());
         }
-
+        // get features option and the plugin version
         $this->options = get_option('hackerspace_features');
+        $this->plugin_version = get_option('hackerspace_version');
     }
 
     /**
@@ -39,6 +40,7 @@ class Settings_Features
 
         add_settings_section('features_section', null, array($this, 'features_section'), 'hackerspace_features');
 
+        add_settings_field('plugin_version', __('Hackerspace plugin version', 'wp-hackerspace'), array($this, 'version_field'), 'hackerspace_features', 'features_section');
         add_settings_field('projects_enabled', __('Projects', 'wp-hackerspace'), array($this, 'projects_field'), 'hackerspace_features', 'features_section');
         add_settings_field('spaceapi_enabled', __('Space Api', 'wp-hackerspace'), array($this, 'spaceapi_field'), 'hackerspace_features', 'features_section');
 
@@ -88,6 +90,12 @@ class Settings_Features
     /** Render the features section description text */
     public function features_section()
     {
+    }
+
+    /** Render the plugin version field (read only) */
+    public function version_field()
+    {
+        echo '<input type="text" name="plugin_version" value="'.esc_attr($this->plugin_version).'" class="regular-text" readonly style="width: 5em;" />';
     }
 
     /** Render the Project custom post type feature field */
