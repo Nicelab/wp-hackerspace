@@ -49,9 +49,32 @@ class Plugin_Setup
         flush_rewrite_rules();
     }
 
+    /**
+     * Get the plugin version number from 'hackerspace_version' options
+     *
+     * @return text $plugin_version version number from the options
+     */
+    public function plugin_version()
+    {
+        // if no version exist, we assume then it's first install an set the current version
+        if (false == get_option('hackerspace_version')) {
+            add_option('hackerspace_version', Hackerspace::PLUGIN_VERSION);
+        }
+        // get the version number
+        $plugin_version = get_option('hackerspace_version');
+
+        return $plugin_version;
+    }
+
     /** Update the plugin */
     public function update()
     {
+        $plugin_version = self::plugin_version();
+        switch($plugin_version) {
+            case '0.3':
+                //placeholder for futures updates
+                //update_option('hackerspace_version', Hackerspace::PLUGIN_VERSION);
+        }
     }
 
     /**
@@ -83,7 +106,7 @@ class Plugin_Setup
         remove_role('hacker');
     }
 
-    //** Set capabilities on custom post type */
+    /** Set capabilities on custom post type */
     private function set_capabilities()
     {
         // limited cababilities for 'hacker' role
@@ -93,7 +116,7 @@ class Plugin_Setup
         Post_Type_Project::set_capabilities('hacker');
     }
 
-    //** Remove capabilities on custom post type */
+    /** Remove capabilities on custom post type */
     private function remove_capabilities()
     {
         // remove capabilities for 'adminstrator' and 'editor' roles

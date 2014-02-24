@@ -42,11 +42,14 @@ class Hackerspace
         // register activation and deactivation hooks for the plugin
         register_activation_hook(__FILE__, array('Plugin_Setup', 'activate'));
         register_deactivation_hook(__FILE__, array('Plugin_Setup', 'deactivate'));
+        // enable the plugin updater
+        add_action('admin_init',  array('Plugin_Setup', 'update'));
+
 
         // load translations
         load_plugin_textdomain('wp-hackerspace', false, plugin_dir_path(__FILE__).'/languages');
 
-        // configure the plugin settings
+        // set the plugin settings
         add_action('admin_init', array($this, 'admin_init'));
 
         // enable the admin setting menu
