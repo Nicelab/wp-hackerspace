@@ -75,8 +75,9 @@ class Plugin_Setup
         }
     }
 
-    //* Set default values for options on first install */
-    private function set_default_options() {
+    /** Set default values for options on first install */
+    private function set_default_options()
+    {
         $Settings_Features = new Settings_Features();
         $Space_Api = new Space_Api();
         // set default features options
