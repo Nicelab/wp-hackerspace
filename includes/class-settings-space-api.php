@@ -10,12 +10,6 @@ class Settings_Space_Api
     /** Constructor for the Settings_Features class */
     public function __construct()
     {
-        // set default values for options on first install
-        if (false == get_option('hackerspace_spaceapi')) {
-            $Space_Api = new Space_Api();
-            add_option('hackerspace_spaceapi', $Space_Api->set_default_spaceapi());
-        }
-
         $this->options = get_option('hackerspace_spaceapi');
     }
 

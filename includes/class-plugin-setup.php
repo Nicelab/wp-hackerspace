@@ -22,6 +22,8 @@ class Plugin_Setup
         if (! current_user_can('activate_plugins')) {
             return;
         }
+        // set default values for options
+        $this->set_default_options();
         // enable the 'hacker' role
         $this->add_hacker_role();
         // set capabilities
@@ -70,6 +72,20 @@ class Plugin_Setup
             case '0.3':
                 //placeholder for futures updates
                 //update_option('hackerspace_version', Hackerspace::PLUGIN_VERSION);
+        }
+    }
+
+    //* Set default values for options on first install */
+    private function set_default_options() {
+        $Settings_Features = new Settings_Features();
+        $Space_Api = new Space_Api();
+        // set default features options
+        if (false == get_option('hackerspace_features')) {
+            add_option('hackerspace_features', $Settings_Features->set_default_features());
+        }
+        // set default Space Api options
+        if (false == get_option('hackerspace_spaceapi')) {
+            add_option('hackerspace_spaceapi', $Space_Api->set_default_spaceapi());
         }
     }
 

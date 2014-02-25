@@ -10,10 +10,6 @@ class Settings_Features
     /** Constructor for the Settings_Features class */
     public function __construct()
     {
-        // set default values for options on first install
-        if (false == get_option('hackerspace_features')) {
-            add_option('hackerspace_features', $this->set_default_features());
-        }
         // get features option and the plugin version
         $this->options = get_option('hackerspace_features');
         $this->plugin_version = get_option('hackerspace_version');

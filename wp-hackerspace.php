@@ -55,14 +55,11 @@ class Hackerspace
         // load translations
         load_plugin_textdomain('wp-hackerspace', false, plugin_dir_path(__FILE__).'/languages');
 
-        // set the plugin settings
+        // register the plugin settings
         add_action('admin_init', array($this, 'admin_init'));
 
         // enable the admin setting menu
         add_action('admin_menu', array($this, 'admin_menu'));
-
-        // enable the Space Api json feed
-        add_action('init', array($this, 'spaceapi_feed'));
 
         // enable the spaceapi rel element in the blog headers
         add_action('wp_head', array($this, 'spaceapi_rel'));
@@ -70,15 +67,15 @@ class Hackerspace
         // enable the contextual help
         add_action('contextual_help', array($this, 'plugin_contextual_help'), 10, 3);
 
-        // enable the Project post type
-        add_action('init', array('Post_Type_Project', 'register_project_post_type'));
-
         // enable a settings link in the WordPress plugins menu
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'plugin_action_links'));
 
-        // Temporary debug lines until an update mecanism if added. Uncomment to reset default values or missing ones after upgrade
-        //$Space_Api = new Space_Api();
-        //update_option('hackerspace_spaceapi', $Space_Api->set_default_spaceapi());
+        // enable the Project post type
+        add_action('init', array($this->Post_Type_Project, 'register_project_post_type'));
+
+        // enable the Space Api json endpoint
+        add_action('init', array($this->Space_Api, 'spaceapi_endpoint'));
+
     }
 
     /** Register the plugin settings */
@@ -166,12 +163,6 @@ class Hackerspace
         $links[] = '<a href="'.get_admin_url(null, 'options-general.php?page=hackerspace_options').'">'.__('Settings', 'wp-hackerspace').'</a>';
 
         return $links;
-    }
-
-    /** Render the Space Api json feed */
-    public function spaceapi_feed()
-    {
-        add_feed('spaceapi', array($this->Space_Api, 'spaceapi_json'));
     }
 
     /** Add the spaceapi rel element to the blog headers */
