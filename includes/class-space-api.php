@@ -53,36 +53,15 @@ class Space_Api
     {
         // get infos from settings
         $spaceapi = get_option('hackerspace_spaceapi');
-        // remove not required empty values
+        // remove (not required) empty address field from the $spaceapi object
         if ($spaceapi->location->address == '') {
             unset($spaceapi->location->address);
         }
-        if ($spaceapi->contact->phone == '') {
-            unset($spaceapi->contact->phone);
-        }
-        if ($spaceapi->contact->sip == '') {
-            unset($spaceapi->contact->sip);
-        }
-        if ($spaceapi->contact->irc == '') {
-            unset($spaceapi->contact->irc);
-        }
-        if ($spaceapi->contact->twitter == '') {
-            unset($spaceapi->contact->twitter);
-        }
-        if ($spaceapi->contact->facebook == '') {
-            unset($spaceapi->contact->facebook);
-        }
-        if ($spaceapi->contact->identica == '') {
-            unset($spaceapi->contact->identica);
-        }
-        if ($spaceapi->contact->foursquare == '') {
-            unset($spaceapi->contact->foursquare);
-        }
-        if ($spaceapi->contact->ml == '') {
-            unset($spaceapi->contact->ml);
-        }
-        if ($spaceapi->contact->jabber == '') {
-            unset($spaceapi->contact->jabber);
+        // remove (not required) empty contact fields from the $spaceapi object
+        foreach ($spaceapi->contact as $property => $value) {
+            if ($value == '') {
+                unset($spaceapi->contact->$property);
+            }
         }
 
         // Add the open/close status
