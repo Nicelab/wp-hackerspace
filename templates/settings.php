@@ -10,6 +10,9 @@ if (isset($_GET['tab'])) {
     $active_tab = 'features';
 }
 
+// get the spaceapi_enabled feature setting
+$spaceapi_enabled = get_option('hackerspace_features')->spaceapi_enabled;
+
 ?>
 
 
@@ -24,13 +27,19 @@ if (isset($_GET['tab'])) {
         }
         ?>">
         <?php _e('Features', 'wp-hackerspace') ?></a>
+        <?php
+        // display the Space Api tab if the feature is enabled
+        if ($spaceapi_enabled == true): ?>
         <a href="?page=hackerspace_options&tab=spaceapi" class="nav-tab
         <?php
         if ($active_tab == 'spaceapi') {
             echo ' nav-tab-active';
         }
         ?>">
-        <?php _e('Space Api', 'wp-hackerspace') ?></a>
+        <?php
+        _e('Space Api', 'wp-hackerspace');
+        endif;
+        ?></a>
     </h2>
 
     <form action="options.php" method="post">

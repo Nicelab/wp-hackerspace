@@ -87,6 +87,18 @@ class Space_Api
         return $spaceapi;
     }
 
+    /** Register the Space Api json feed endpoint */
+    public function spaceapi_endpoint()
+    {
+        $features = get_option('hackerspace_features');
+        if ($features->spaceapi_enabled == false) {
+            // do not the json endpoint if disabled in the settings
+            return;
+        }
+
+        add_feed('spaceapi', array($this, 'spaceapi_json'));
+    }
+
     /** Render json encoded Space Api infos */
     public function spaceapi_json()
     {

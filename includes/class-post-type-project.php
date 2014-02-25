@@ -26,6 +26,12 @@ class Post_Type_Project
     /** Register the custom post type for Projects */
     public function register_project_post_type()
     {
+        $features = get_option('hackerspace_features');
+        if ($features->projects_enabled == false) {
+            // do not register project custom post type if disabled in the settings
+            return;
+        }
+
         register_post_type('hackerspace_project', array(
             'labels'             => array(
                 'name'               => __('Projects', 'wp-hackerspace'),
