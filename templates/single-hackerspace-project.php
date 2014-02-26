@@ -4,7 +4,7 @@
  *
  */
 
-//* Display the post additional fields */
+/** Display the post additional fields */
 function hackerspace_project_post_meta()
 {
     $status = esc_html(get_post_meta(get_the_ID(), '_project_status', true));
