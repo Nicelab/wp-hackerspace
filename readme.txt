@@ -4,7 +4,7 @@ Donate link:
 Tags: hackerspace, spaceapi, json, wiki
 Requires at least: 3.8
 Tested up to: 3.8.1
-Stable tag:
+Stable tag: 0.3
 License: Expat/MIT
 License URI: http://directory.fsf.org/wiki/License:Expat
 
