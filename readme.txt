@@ -27,6 +27,10 @@ Main limitations: no membership support, no events support.
 
 == Frequently Asked Questions ==
 
+Q: How to make permalinks works with the custom post types ?
+A: After plugin activation, unset, and set up again the permalinks.
+
+
 == Screenshots ==
 
 
