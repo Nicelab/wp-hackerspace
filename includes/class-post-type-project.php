@@ -8,8 +8,6 @@
 class Post_Type_Project
 {
 
-    //TODO add a template page to display additional fields
-
     /** Constructor for the Post_Type_Project class */
     public function __construct()
     {
@@ -21,6 +19,8 @@ class Post_Type_Project
         add_action('add_meta_boxes', array($this, 'register_project_meta_box'));
         // add a save callback for saving additional fields
         add_action('save_post', array($this, 'save_project_fields'));
+        // register the project custom post type template
+        add_filter('template_include', array($this, 'register_template'), 1 );
     }
 
     /** Register the custom post type for Projects */
@@ -237,7 +237,7 @@ class Post_Type_Project
         echo '<fieldset><legend><strong>'.__('Contact person', 'wp-hackerspace').'</strong></legend>';
         echo '<input type="text" name="project_contact" value="'.esc_attr($contact).'" class="regular-text" />';
         echo '&nbsp;<span class="description">'.__('The person to contact.', 'wp-hackerspace').'</fieldset></br>';
-        echo '<fieldset><legend><strong>'.__('Repository address', 'wp-hackerspace').'</strong></legend>';
+        echo '<fieldset><legend><strong>'.__('Repository', 'wp-hackerspace').'</strong></legend>';
         echo '<input type="url" name="project_repository_url" value="'.esc_attr($repository_url).'" class="regular-text code" />';
         echo '&nbsp;<span class="description">'.__('URL of the source code repository.', 'wp-hackerspace').'</fieldset>';
     }
@@ -269,6 +269,30 @@ class Post_Type_Project
         update_post_meta($post_id, '_project_status', $status);
         update_post_meta($post_id, '_project_contact', $contact);
         update_post_meta($post_id, '_project_repository_url', $repository_url);
+    }
+
+    /**
+     * Register the template for projects custom post type
+     *
+     * Allow the display of additional fields.
+     *
+     * @param string $template_path Default path of the normal template file
+     *
+     * @return string $template_path Updated template path
+     */
+    public function register_template($template_path)
+    {
+        if (get_post_type() == 'hackerspace_project' && is_single()) {
+            // use the template from themes if available
+            if ($theme_file = locate_template(array('single-hackerspace-project' ))) {
+                $template_path = $theme_file;
+            } else {
+                // TODO add a constant base path for the plugin to avoid '..' trick
+                $template_path = plugin_dir_path(__FILE__).'../templates/single-hackerspace-project.php';
+            }
+        }
+
+        return $template_path;
     }
 
 }
