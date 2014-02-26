@@ -287,8 +287,7 @@ class Post_Type_Project
             if ($theme_file = locate_template(array('single-hackerspace-project' ))) {
                 $template_path = $theme_file;
             } else {
-                // TODO add a constant base path for the plugin to avoid '..' trick
-                $template_path = plugin_dir_path(__FILE__).'../templates/single-hackerspace-project.php';
+                $template_path = HACKERSPACE_PLUGIN_DIR.'/templates/single-hackerspace-project.php';
             }
         }
 

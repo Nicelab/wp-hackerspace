@@ -12,15 +12,10 @@
  * Domain Path: /languages
  */
 
-
-// include the required external classes files
-require_once(plugin_dir_path(__FILE__).'includes/class-plugin-setup.php');
-require_once(plugin_dir_path(__FILE__).'includes/class-space-api.php');
-require_once(plugin_dir_path(__FILE__).'includes/class-settings-features.php');
-require_once(plugin_dir_path(__FILE__).'includes/class-settings-space-api.php');
-require_once(plugin_dir_path(__FILE__).'includes/class-post-type-project.php');
-require_once(plugin_dir_path(__FILE__).'includes/class-space-state.php');
-
+// define global constants for versions and base directory
+define('HACKERSPACE_PLUGIN_VERSION', '0.3');
+define('HACKERSPACE_SPACE_API_VERSION', '0.13');
+define('HACKERSPACE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 /**
  * Main class for the plugin
@@ -30,8 +25,6 @@ require_once(plugin_dir_path(__FILE__).'includes/class-space-state.php');
 class Hackerspace
 {
 
-    const PLUGIN_VERSION = '0.3';
-
     /**
      * Constructor for the Hackerspace class
      *
@@ -39,6 +32,14 @@ class Hackerspace
      */
     public function __construct()
     {
+        // include the required external classes files
+        require_once(HACKERSPACE_PLUGIN_DIR.'includes/class-plugin-setup.php');
+        require_once(HACKERSPACE_PLUGIN_DIR.'includes/class-space-api.php');
+        require_once(HACKERSPACE_PLUGIN_DIR.'includes/class-settings-features.php');
+        require_once(HACKERSPACE_PLUGIN_DIR.'includes/class-settings-space-api.php');
+        require_once(HACKERSPACE_PLUGIN_DIR.'includes/class-post-type-project.php');
+        require_once(HACKERSPACE_PLUGIN_DIR.'includes/class-space-state.php');
+
         // instantiate the required external classes
         $this->Plugin_Setup = new Plugin_Setup();
         $this->Post_Type_Project = new Post_Type_Project();
@@ -53,7 +54,7 @@ class Hackerspace
         add_action('admin_init',  array($this->Plugin_Setup, 'update'));
 
         // load translations
-        load_plugin_textdomain('wp-hackerspace', false, plugin_dir_path(__FILE__).'/languages');
+        load_plugin_textdomain('wp-hackerspace', false, HACKERSPACE_PLUGIN_DIR.'/languages');
 
         // register the plugin settings
         add_action('admin_init', array($this, 'admin_init'));
@@ -103,7 +104,7 @@ class Hackerspace
         if (! current_user_can('manage_options')) {
             wp_die(__('You do not have sufficient permissions to access this page.', 'wp-hackerspace'));
         }
-        include(sprintf(plugin_dir_path(__FILE__).'templates/settings.php'));
+        include(sprintf(HACKERSPACE_PLUGIN_DIR.'templates/settings.php'));
     }
 
     /** Render the contextual help drop-down menu

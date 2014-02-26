@@ -56,7 +56,7 @@ class Plugin_Setup
     {
         // if no version exist, we assume then it's first install an set the current version
         if (false == get_option('hackerspace_version')) {
-            add_option('hackerspace_version', Hackerspace::PLUGIN_VERSION);
+            add_option('hackerspace_version', HACKERSPACE_PLUGIN_VERSION);
         }
         // get the version number
         $plugin_version = get_option('hackerspace_version');
@@ -71,7 +71,7 @@ class Plugin_Setup
         switch($plugin_version) {
             case '0.3':
                 //placeholder for futures updates
-                //update_option('hackerspace_version', Hackerspace::PLUGIN_VERSION);
+                //update_option('hackerspace_version', HACKERSPACE_PLUGIN_VERSION);
         }
     }
 

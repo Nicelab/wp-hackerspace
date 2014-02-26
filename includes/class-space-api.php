@@ -11,8 +11,6 @@
 class Space_Api
 {
 
-    const API_VERSION = '0.13';
-
     /**
      * Create the default Space Api values
      *
@@ -21,7 +19,7 @@ class Space_Api
     public function set_default_spaceapi()
     {
         $spaceapi = new stdClass;
-        $spaceapi->api = self::API_VERSION;
+        $spaceapi->api = HACKERSPACE_SPACE_API_VERSION;
         $spaceapi->space = get_option('blogname');
         $spaceapi->logo = '';
         $spaceapi->url = get_option('siteurl');
