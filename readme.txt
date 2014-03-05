@@ -27,12 +27,16 @@ Main limitations: no membership support, no events support.
 
 == Frequently Asked Questions ==
 
-Q: How to make permalinks works with the custom post types ?
-A: After plugin activation, unset, and set up again the permalinks.
+= How to make permalinks works with the custom post types =
+After plugin activation, unset, and set up again the permalinks.
 
 
 == Screenshots ==
+1. The plugin features settings tab
+2. The plugin Sapce Api settings tab
 
 
 == Changelog ==
 
+= 0.3 =
+First stable release
