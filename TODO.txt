@@ -7,6 +7,7 @@ General
 - Extend uninstall to remove all datas
 - Write a better way for uninstall : ask the user to remove, or not, custom post type, hackerspace user and settings
 - Add french translation
+- Add screenshoots
 
 
 Spaceapi endpoint
