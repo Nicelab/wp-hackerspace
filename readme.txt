@@ -12,12 +12,16 @@ Add custom post types useful for hackerspaces and expose information trough the 
 
 
 == Description ==
-The plugin add various custom post type useful for Hackerspaces : Wiki, Projects and Equipment.  This custom post type are available to the new \"hacker\" user role. The plugin also implement the Space APi to display informations about the Hackerspace. The open/close information is derived from the Opening Hours plugin.
+The plugin add various custom post type useful for Hackerspaces : Wiki, Projects and Equipment.  This custom post type are available to the new \"hacker\" user role. The plugin also implement the Space Api to display informations about the Hackerspace. The open/close information is derived from the Opening Hours plugin.
 
 Main limitations: no membership support, no events support.
 
 
 == Installation ==
+= Prerequistes =
+Opening Hours WordPress plugin is required for open/close status.
+
+= Install =
 1. Download the Zip archive
 2. Unzip the archive
 3. Upload the plugin folder to the /wp-content/plugins/ directory or by upload in the web interface
