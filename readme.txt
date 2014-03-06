@@ -12,7 +12,7 @@ Add custom post types useful for hackerspaces and expose information trough the 
 
 
 == Description ==
-The plugin a Projects custom post type useful for Hackerspaces. This custom post type is available to the new \"hacker\" user role. The plugin also implement the Space Api to display informations about the Hackerspace. The open/close information is derived from the Opening Hours plugin.
+The plugin add a Projects custom post type useful for Hackerspaces. This custom post type is available to the new "hacker" user role. The plugin also implement the Space Api to display informations about the Hackerspace. The open/close information is derived from the Opening Hours plugin.
 
 Main limitations: no membership support, no events support.
 
@@ -37,7 +37,7 @@ After plugin activation, unset, and set up again the permalinks.
 
 == Screenshots ==
 1. The plugin features settings tab
-2. The plugin Sapce Api settings tab
+2. The plugin Space Api settings tab
 
 
 == Changelog ==
